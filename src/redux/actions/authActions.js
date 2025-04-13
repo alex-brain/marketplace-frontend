@@ -1,4 +1,4 @@
-import { authAPI } from '../../services/api';
+import * as authAPI from '../../services/authApi';
 import {
   AUTH_REQUEST,
   AUTH_SUCCESS,
@@ -37,25 +37,24 @@ export const checkAuth = () => async (dispatch) => {
 
 // Регистрация нового пользователя
 export const register = (userData) => async (dispatch) => {
+  console.log('userData', userData)
   dispatch({ type: AUTH_REQUEST });
 
   try {
-    const response = await authAPI.register(
-      userData.name,
-      userData.email,
-      userData.password
-    );
+    const response = await authAPI.register(userData);
+    console.log('response', response)
 
     dispatch({
       type: AUTH_SUCCESS,
       payload: {
-        token: response.data.token,
-        user: response.data.user
+        token: response.token,
+        user: response.user
       }
     });
 
     return true;
   } catch (error) {
+    console.log('error', error)
     dispatch({
       type: AUTH_FAILURE,
       payload: error.response?.data?.message || 'Ошибка регистрации'
@@ -66,11 +65,11 @@ export const register = (userData) => async (dispatch) => {
 };
 
 // Авторизация пользователя
-export const login = (email, password) => async (dispatch) => {
+export const login = ({email, password}) => async (dispatch) => {
   dispatch({ type: AUTH_REQUEST });
 
   try {
-    const response = await authAPI.login(email, password);
+    const response = await authAPI.login({email, password});
 
     dispatch({
       type: AUTH_SUCCESS,

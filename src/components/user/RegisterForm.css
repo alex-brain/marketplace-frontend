@@ -1,0 +1,244 @@
+.register-form-container {
+    width: 100%;
+    max-width: 550px;
+    padding: 15px;
+}
+
+.register-form-wrapper {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+}
+
+.register-form-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.register-form-subtitle {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.register-form-error-message {
+    background-color: #fff8f8;
+    border: 1px solid #ffcdd2;
+    border-radius: 4px;
+    color: #d32f2f;
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+}
+
+.form-group input {
+    height: 45px;
+    padding: 0 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #ff9900;
+}
+
+.form-group input.input-error {
+    border-color: #d32f2f;
+}
+
+.error-text {
+    color: #d32f2f;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.form-group-checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.form-group-checkbox input[type="checkbox"] {
+    margin-top: 3px;
+}
+
+.form-group-checkbox label {
+    font-size: 14px;
+    color: #333;
+    line-height: 1.4;
+}
+
+.terms-link {
+    color: #ff9900;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.terms-link:hover {
+    color: #e68a00;
+    text-decoration: underline;
+}
+
+.register-button {
+    height: 45px;
+    background-color: #ff9900;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.register-button:hover {
+    background-color: #e68a00;
+}
+
+.register-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.register-divider {
+    display: flex;
+    align-items: center;
+    color: #888;
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+.register-divider::before,
+.register-divider::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid #ddd;
+}
+
+.register-divider span {
+    padding: 0 10px;
+}
+
+.social-register-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.google-register-button,
+.facebook-register-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    height: 45px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.google-register-button:hover {
+    background-color: #f8f8f8;
+}
+
+.facebook-register-button {
+    background-color: #3b5998;
+    border-color: #3b5998;
+    color: #fff;
+}
+
+.facebook-register-button:hover {
+    background-color: #334d84;
+}
+
+.google-register-button img,
+.facebook-register-button img {
+    width: 20px;
+    height: 20px;
+}
+
+.facebook-register-button img {
+    filter: brightness(0) invert(1);
+}
+
+.register-form-footer {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+}
+
+.login-link {
+    color: #ff9900;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.login-link:hover {
+    color: #e68a00;
+    text-decoration: underline;
+}
+
+@media screen and (max-width: 768px) {
+    .register-form-container {
+        max-width: 100%;
+    }
+
+    .register-form-wrapper {
+        padding: 20px;
+    }
+
+    .register-form-title {
+        font-size: 24px;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .form-group-checkbox {
+        align-items: flex-start;
+    }
+}

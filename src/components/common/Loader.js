@@ -1,5 +1,5 @@
 import React from 'react';
-import './Loader.css';
+// import './Loader.css';
 
 const Loader = ({ size = 'medium', fullScreen = false }) => {
   const sizeClass = `loader-${size}`;

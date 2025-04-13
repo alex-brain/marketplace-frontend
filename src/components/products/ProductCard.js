@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { addToCart } from '../../redux/actions/cartActions';
+// import { addToCart } from '../../redux/actions/cartActions';
 
 const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
 
   const handleAddToCart = () => {
-    dispatch(addToCart(product.id, 1));
+    // dispatch(addToCart(product.id, 1));
   };
 
   return (

@@ -1,0 +1,115 @@
+.register-page {
+    min-height: calc(100vh - 150px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 40px 0;
+    background-color: #f9fafb;
+}
+
+.register-page-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.register-page-content {
+    display: flex;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    background-color: #fff;
+}
+
+.register-form-section {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    background-color: #fff;
+}
+
+.register-image-section {
+    flex: 1;
+    background-color: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    position: relative;
+}
+
+.register-image-wrapper {
+    max-width: 450px;
+    text-align: center;
+}
+
+.register-illustration {
+    width: 100%;
+    max-width: 350px;
+    margin-bottom: 30px;
+}
+
+.register-benefits {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 25px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    text-align: left;
+}
+
+.register-benefits h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.register-benefits ul {
+    padding-left: 20px;
+    margin: 0;
+}
+
+.register-benefits li {
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #555;
+    position: relative;
+}
+
+.register-benefits li::before {
+    content: "✓";
+    color: #ff9900;
+    position: absolute;
+    left: -20px;
+    font-weight: bold;
+}
+
+.register-benefits li:last-child {
+    margin-bottom: 0;
+}
+
+@media screen and (max-width: 992px) {
+    .register-page-content {
+        flex-direction: column;
+    }
+
+    .register-image-section {
+        padding: 30px;
+    }
+
+    .register-benefits {
+        padding: 20px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .register-page {
+        padding: 20px 0;
+    }
+
+    .register-image-section {
+        display: none;
+    }
+}

@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToCart } from '../../redux/actions/cartActions';
+// import { addToCart } from '../../redux/actions/cartActions';
 import Rating from './Rating';
-import Button from './Button';
-import './ProductCard.css';
+import Button from './Buttons';
+// import './ProductCard.css';
 
 const ProductCard = ({
                        product,
@@ -24,7 +24,7 @@ const ProductCard = ({
       return;
     }
 
-    dispatch(addToCart(product.id, 1));
+    // dispatch(addToCart(product.id, 1));
   };
 
   // Форматирование цены

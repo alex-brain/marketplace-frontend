@@ -1,0 +1,115 @@
+.login-page {
+    min-height: calc(100vh - 150px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 40px 0;
+    background-color: #f9fafb;
+}
+
+.login-page-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.login-page-content {
+    display: flex;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    background-color: #fff;
+}
+
+.login-form-section {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    background-color: #fff;
+}
+
+.login-image-section {
+    flex: 1;
+    background-color: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    position: relative;
+}
+
+.login-image-wrapper {
+    max-width: 450px;
+    text-align: center;
+}
+
+.login-illustration {
+    width: 100%;
+    max-width: 350px;
+    margin-bottom: 30px;
+}
+
+.login-benefits {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 25px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    text-align: left;
+}
+
+.login-benefits h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.login-benefits ul {
+    padding-left: 20px;
+    margin: 0;
+}
+
+.login-benefits li {
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #555;
+    position: relative;
+}
+
+.login-benefits li::before {
+    content: "✓";
+    color: #ff9900;
+    position: absolute;
+    left: -20px;
+    font-weight: bold;
+}
+
+.login-benefits li:last-child {
+    margin-bottom: 0;
+}
+
+@media screen and (max-width: 992px) {
+    .login-page-content {
+        flex-direction: column;
+    }
+
+    .login-image-section {
+        padding: 30px;
+    }
+
+    .login-benefits {
+        padding: 20px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .login-page {
+        padding: 20px 0;
+    }
+
+    .login-image-section {
+        display: none;
+    }
+}

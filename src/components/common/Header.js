@@ -2,26 +2,26 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../redux/actions/authActions';
-import { fetchCart } from '../../redux/actions/cartActions';
-import { fetchCategories } from '../../redux/actions/categoryActions';
+// import { fetchCart } from '../../redux/actions/cartActions';
+// import { fetchCategories } from '../../redux/actions/categoryActions';
 import './Header.css';
 
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isAuthenticated, user } = useSelector(state => state.auth);
-  const { items } = useSelector(state => state.cart);
-  const { categories } = useSelector(state => state.categories);
+  // const { items } = useSelector(state => state.cart);
+  // const { categories } = useSelector(state => state.categories);
   const [searchQuery, setSearchQuery] = useState('');
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showCategoriesMenu, setShowCategoriesMenu] = useState(false);
 
-  useEffect(() => {
+/*  useEffect(() => {
     dispatch(fetchCategories());
     if (isAuthenticated) {
       dispatch(fetchCart());
     }
-  }, [dispatch, isAuthenticated]);
+  }, [dispatch, isAuthenticated]);*/
 
   const handleLogout = () => {
     dispatch(logout());
@@ -36,7 +36,7 @@ const Header = () => {
     }
   };
 
-  const cartItemsCount = items.reduce((total, item) => total + item.quantity, 0);
+  // const cartItemsCount = items.reduce((total, item) => total + item.quantity, 0);
 
   return (
     <header className="header">
@@ -56,20 +56,21 @@ const Header = () => {
         <div className={`header-center ${showMobileMenu ? 'show' : ''}`}>
           <form className="search-form" onSubmit={handleSearch}>
             <input
+              className="search-input"
               type="text"
               placeholder="Поиск товаров..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
-            <button type="submit">
+            <button type="submit" className="search-button">
               <i className="fas fa-search"></i>
             </button>
           </form>
 
-          <nav className="main-nav">
+          <nav className="nav-menu">
             <ul>
-              <li>
-                <Link to="/">Главная</Link>
+              <li className="nav-item">
+                <Link to="/" className="nav-link">Главная</Link>
               </li>
               <li
                 className="categories-dropdown"
@@ -77,7 +78,7 @@ const Header = () => {
                 onMouseLeave={() => setShowCategoriesMenu(false)}
               >
                 <span>Категории</span>
-                {categories.length > 0 && (
+               {/* {categories.length > 0 && (
                   <div className={`dropdown-menu ${showCategoriesMenu ? 'show' : ''}`}>
                     {categories.map(category => (
                       <Link
@@ -89,16 +90,16 @@ const Header = () => {
                       </Link>
                     ))}
                   </div>
-                )}
+                )}*/}
               </li>
               <li>
-                <Link to="/products">Все товары</Link>
+                <Link to="/products" className="nav-link">Все товары</Link>
               </li>
               <li>
-                <Link to="/about">О нас</Link>
+                <Link to="/about" className="nav-link">О нас</Link>
               </li>
               <li>
-                <Link to="/contact">Контакты</Link>
+                <Link to="/contact" className="nav-link">Контакты</Link>
               </li>
             </ul>
           </nav>
@@ -108,9 +109,9 @@ const Header = () => {
           <div className="header-actions">
             <Link to="/cart" className="cart-icon" onClick={() => setShowMobileMenu(false)}>
               <i className="fas fa-shopping-cart"></i>
-              {cartItemsCount > 0 && (
+              {/*{cartItemsCount > 0 && (
                 <span className="cart-count">{cartItemsCount}</span>
-              )}
+              )}*/}
             </Link>
 
             {isAuthenticated ? (

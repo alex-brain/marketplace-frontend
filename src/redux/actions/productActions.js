@@ -1,4 +1,5 @@
-import { productsAPI } from '../../services/api';
+import * as productsAPI from '../../services/productsAPI';
+// import {getProducts} from "../../services/productsAPI";
 
 // Action Types
 export const FETCH_PRODUCTS_REQUEST = 'FETCH_PRODUCTS_REQUEST';
@@ -11,10 +12,11 @@ export const fetchProducts = (filters = {}) => {
     dispatch({ type: FETCH_PRODUCTS_REQUEST });
 
     try {
-      const response = await productsAPI.getAll(filters);
+      const response = await productsAPI.getProducts(filters);
+      
       dispatch({
         type: FETCH_PRODUCTS_SUCCESS,
-        payload: response.data.products
+        payload: response.products
       });
     } catch (error) {
       dispatch({

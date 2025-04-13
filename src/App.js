@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import {Provider, useDispatch, useSelector} from 'react-redux';
 import { checkAuth } from './redux/actions/authActions';
 
 // Компоненты общего назначения
@@ -9,22 +9,23 @@ import Footer from './components/common/Footer';
 
 // Публичные страницы
 import Home from './components/pages/Home';
-import ProductDetail from './components/products/ProductDetail';
-import Login from './components/auth/Login';
-import Register from './components/auth/Register';
+// import ProductDetail from './components/products/ProductDetail';
+import Login from './components/pages/LoginPage';
+import Register from './components/pages/RegisterPage';
+import store from "./redux/store";
 
 // Страницы для авторизованных пользователей
-import Cart from './components/cart/Cart';
-import Checkout from './components/orders/Checkout';
-import OrderConfirmation from './components/orders/OrderConfirmation';
-import OrderHistory from './components/orders/OrderHistory';
-import Profile from './components/user/Profile';
+// import Cart from './components/cart/Cart';
+// import Checkout from './components/orders/Checkout';
+// import OrderConfirmation from './components/orders/OrderConfirmation';
+// import OrderHistory from './components/orders/OrderHistory';
+// import Profile from './components/user/Profile';
 
 // Страницы администратора (продавца)
-import Dashboard from './components/admin/Dashboard';
-import ProductManagement from './components/admin/ProductManagement';
-import CategoryManagement from './components/admin/CategoryManagement';
-import OrderManagement from './components/admin/OrderManagement';
+// import Dashboard from './components/admin/Dashboard';
+// import ProductManagement from './components/admin/ProductManagement';
+// import CategoryManagement from './components/admin/CategoryManagement';
+// import OrderManagement from './components/admin/OrderManagement';
 
 // PrivateRoute - компонент для защищенных маршрутов
 const PrivateRoute = ({ children, requiredRole = null }) => {
@@ -45,15 +46,15 @@ const PrivateRoute = ({ children, requiredRole = null }) => {
 
 const App = () => {
   const dispatch = useDispatch();
-  const { loading } = useSelector((state) => state.auth);
+  // const { loading } = useSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(checkAuth());
   }, [dispatch]);
 
-  if (loading) {
+  /*if (loading) {
     return <div className="app-loading">Загрузка...</div>;
-  }
+  }*/
 
   return (
     <Router>
@@ -63,12 +64,12 @@ const App = () => {
           <Routes>
             {/* Публичные маршруты */}
             <Route path="/" element={<Home />} />
-            <Route path="/products/:id" element={<ProductDetail />} />
+            {/*<Route path="/products/:id" element={<ProductDetail />} />*/}
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
 
             {/* Маршруты для авторизованных пользователей */}
-            <Route
+            {/*<Route
               path="/cart"
               element={
                 <PrivateRoute>
@@ -107,10 +108,10 @@ const App = () => {
                   <Profile />
                 </PrivateRoute>
               }
-            />
+            />*/}
 
             {/* Маршруты для администратора (продавца) */}
-            <Route
+            {/*<Route
               path="/admin"
               element={
                 <PrivateRoute requiredRole="seller">
@@ -141,7 +142,7 @@ const App = () => {
                   <OrderManagement />
                 </PrivateRoute>
               }
-            />
+            />*/}
 
             {/* Маршрут по умолчанию - перенаправление на главную страницу */}
             <Route path="*" element={<Navigate to="/" />} />
