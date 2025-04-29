@@ -1,24 +1,22 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux';
-import { thunk } from 'redux-thunk';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import {thunk} from 'redux-thunk';
+import { composeWithDevTools } from '@redux-devtools/extension';
 
-// Импорт редьюсеров
+// Импортируйте ваши редьюсеры
+import categoryReducer from './reducers/categoriesReducer';
 import authReducer from './reducers/authReducer';
 import productReducer from './reducers/productReducer';
-import categoryReducer from './reducers/categoriesReducer';
-// import cartReducer from './reducers/cartReducer';
-// import orderReducer from './reducers/orderReducer';
+// Импортируйте другие редьюсеры по необходимости
 
-// Объединение редьюсеров
+// Объедините все редьюсеры
 const rootReducer = combineReducers({
+  categories: categoryReducer,
   auth: authReducer,
   products: productReducer,
-  categories: categoryReducer,
-  // cart: cartReducer,
-  // orders: orderReducer
+  // Добавьте другие редьюсеры по необходимости
 });
 
-// Создание store с middleware
+// Создайте хранилище с middleware и DevTools
 const store = createStore(
   rootReducer,
   composeWithDevTools(applyMiddleware(thunk))

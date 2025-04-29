@@ -7,7 +7,7 @@ import ProductCard from '../common/ProductCard';
 import Loader from '../common/Loader';
 // import Carousel from '../common/Carousel'; // Предположим, у нас есть компонент для слайдера
 import Button from '../common/Buttons';
-// import './Home.css';
+ import './Home.css';
 
 const Home = () => {
   const dispatch = useDispatch();
