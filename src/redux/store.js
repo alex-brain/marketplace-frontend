@@ -5,14 +5,23 @@ import { composeWithDevTools } from '@redux-devtools/extension';
 // Импортируйте ваши редьюсеры
 import categoryReducer from './reducers/categoriesReducer';
 import authReducer from './reducers/authReducer';
-import productReducer from './reducers/productReducer';
+
+
+import {
+  productListReducer,
+  productDetailsReducer,
+  productCreateReducer
+} from './reducers/productReducer';
 // Импортируйте другие редьюсеры по необходимости
 
 // Объедините все редьюсеры
 const rootReducer = combineReducers({
   categories: categoryReducer,
   auth: authReducer,
-  products: productReducer,
+  products: productListReducer,
+  productList: productListReducer,
+  productDetails: productDetailsReducer,
+  productCreate: productCreateReducer,
   // Добавьте другие редьюсеры по необходимости
 });
 

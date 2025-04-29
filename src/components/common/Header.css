@@ -1,69 +1,76 @@
+/* Обновления для Header.css */
+
+/* Улучшение основного фона хедера */
 .header {
     width: 100%;
-    background-color: #79006b;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(to right, #5a0251, #710166);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
     position: sticky;
     top: 0;
     z-index: 100;
+    padding: 10px 0;
 }
 
+/* Улучшение контейнера - добавление flexbox */
 .header-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
-}
-
-.header-top {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 15px 0;
-    border-bottom: 1px solid #eee;
 }
 
-.logo-container {
+/* Стилизация левой части */
+.header-left {
     display: flex;
     align-items: center;
 }
 
+/* Стилизация логотипа */
 .logo {
-    height: 40px;
-    margin-right: 10px;
-}
-
-.logo-text {
-    font-size: 22px;
-    font-weight: 700;
-    color: #232f3e;
+    display: flex;
+    align-items: center;
     text-decoration: none;
 }
 
-.logo-text span {
-    color: #ff9900;
+.logo h1 {
+    color: #fff;
+    font-size: 24px;
+    margin: 0;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
-.header-search {
+/* Стилизация поиска */
+.header-center {
     flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin: 0 20px;
-    position: relative;
 }
 
 .search-form {
     display: flex;
+    width: 100%;
+    max-width: 500px;
 }
 
 .search-input {
     width: 100%;
     padding: 10px 15px;
-    border: 1px solid #ddd;
-    border-radius: 4px 0 0 4px;
+    border: none;
+    border-radius: 25px 0 0 25px;
     font-size: 14px;
-    transition: border-color 0.3s;
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .search-input:focus {
-    border-color: #ff9900;
     outline: none;
+    background-color: #ffffff;
 }
 
 .search-button {
@@ -71,72 +78,31 @@
     color: #fff;
     border: none;
     padding: 0 20px;
-    border-radius: 0 4px 4px 0;
+    border-radius: 0 25px 25px 0;
     cursor: pointer;
     transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .search-button:hover {
     background-color: #e68a00;
 }
 
-.search-button svg {
-    width: 16px;
-    height: 16px;
+
+
+/* Используем Font Awesome иконку для поиска */
+.search-button i {
+    font-size: 16px;
 }
 
-.header-actions {
-    display: flex;
-    align-items: center;
-}
-
-.header-action-item {
-    margin-left: 20px;
-    position: relative;
-}
-
-.action-button {
-    background: none;
-    border: none;
-    color: #232f3e;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0;
-    font-size: 13px;
-}
-
-.action-button svg {
-    margin-bottom: 4px;
-    width: 20px;
-    height: 20px;
-}
-
-.cart-count {
-    position: absolute;
-    top: -5px;
-    right: -8px;
-    background-color: #ff9900;
-    color: #fff;
-    font-size: 11px;
-    font-weight: 700;
-    border-radius: 50%;
-    width: 18px;
-    height: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.header-bottom {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 0;
-}
-
+/* Стилизация навигационного меню */
 .nav-menu {
+    margin-left: 20px;
+}
+
+.nav-menu ul {
     display: flex;
     list-style: none;
     margin: 0;
@@ -144,224 +110,215 @@
 }
 
 .nav-item {
-    margin-right: 25px;
+    margin-right: 20px;
 }
 
-.nav-link {
-    color: #333;
+.nav-link, .categories-dropdown span {
+    color: #fff;
     text-decoration: none;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 500;
-    position: relative;
+    padding: 5px 0;
     transition: color 0.3s;
-}
-
-.nav-link:hover {
-    color: #ff9900;
-}
-
-.nav-link.active {
-    color: #ff9900;
-}
-
-.nav-link.active::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background-color: #ff9900;
-}
-
-.bonus-points {
-    background-color: #f8f9fa;
-    padding: 5px 12px;
-    border-radius: 20px;
-    font-size: 13px;
-    font-weight: 500;
-    color: #232f3e;
-}
-
-.bonus-points span {
-    color: #ff9900;
-    font-weight: 700;
-}
-
-.mobile-menu-button {
-    display: none;
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    color: #333;
-}
-
-.mobile-menu {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 80%;
-    height: 100vh;
-    background-color: #fff;
-    box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
-    z-index: 200;
-    padding: 20px;
-    transform: translateX(-100%);
-    transition: transform 0.3s ease-in-out;
-}
-
-.mobile-menu.active {
-    transform: translateX(0);
-}
-
-.close-menu {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-}
-
-.mobile-menu-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 199;
-}
-
-.mobile-menu-overlay.active {
     display: block;
 }
 
+.nav-link:hover, .categories-dropdown span:hover {
+    color: #ff9900;
+}
+
+/* Стилизация выпадающего меню категорий */
 .categories-dropdown {
     position: relative;
-    margin-right: 25px;
-}
-
-.categories-button {
-    display: flex;
-    align-items: center;
-    background-color: #232f3e;
-    color: #fff;
-    padding: 8px 15px;
-    border: none;
-    border-radius: 4px;
+    margin-right: 20px;
     cursor: pointer;
-    font-size: 14px;
-    font-weight: 500;
 }
 
-.categories-button svg {
-    margin-right: 8px;
-}
-
-.categories-content {
-    display: none;
+.dropdown-menu {
     position: absolute;
     top: 100%;
     left: 0;
     background-color: #fff;
     min-width: 200px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    z-index: 1;
     border-radius: 4px;
     padding: 10px 0;
+    z-index: 1;
+    display: none;
 }
 
-.categories-dropdown:hover .categories-content {
+.dropdown-menu.show {
     display: block;
 }
 
-.category-link {
-    display: block;
-    padding: 8px 15px;
+.dropdown-menu a {
     color: #333;
+    padding: 8px 15px;
     text-decoration: none;
+    display: block;
     font-size: 14px;
     transition: background-color 0.3s;
 }
 
-.category-link:hover {
-    background-color: #f8f9fa;
-    color: #ff9900;
+.dropdown-menu a:hover {
+    background-color: #f5f5f5;
+    color: #79006b;
 }
 
-@media (max-width: 992px) {
-    .header-search {
-        margin: 0 10px;
-    }
+/* Стилизация правой части */
+.header-right {
+    display: flex;
+    align-items: center;
+}
 
-    .nav-item {
-        margin-right: 15px;
+.header-actions {
+    display: flex;
+    align-items: center;
+}
+
+.cart-icon {
+    position: relative;
+    color: #fff;
+    font-size: 20px;
+    margin-right: 20px;
+    text-decoration: none;
+}
+
+.cart-count {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    background-color: #ff9900;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Стилизация выпадающего меню пользователя */
+.user-dropdown {
+    position: relative;
+}
+
+.user-button {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.user-button i {
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+.user-dropdown .dropdown-menu {
+    right: 0;
+    left: auto;
+}
+
+/* Стилизация кнопок авторизации */
+.auth-buttons {
+    display: flex;
+}
+
+.login-button, .register-button {
+    padding: 3px 15px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 50;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.login-button {
+    background-color: transparent;
+    border: 1px solid #fff;
+    margin-right: 15px;
+}
+
+.login-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.register-button {
+    background-color: #ff9900;
+}
+
+.register-button:hover {
+    background-color: #e68a00;
+}
+
+/* Адаптивный дизайн */
+@media (max-width: 992px) {
+    .header-center {
+        margin: 0 10px;
     }
 }
 
 @media (max-width: 768px) {
-    .header-top {
-        padding: 10px 0;
-    }
-
-    .header-search {
-        display: none;
-    }
-
-    .header-bottom {
-        display: none;
-    }
-
     .mobile-menu-button {
         display: block;
-    }
-
-    .mobile-menu {
-        display: block;
-    }
-
-    .header-actions {
-        margin-left: auto;
-    }
-
-    .header-action-item {
+        color: #fff;
+        background: none;
+        border: none;
+        font-size: 22px;
         margin-left: 15px;
+        cursor: pointer;
     }
-
-    .search-form-mobile {
-        margin-top: 20px;
-        margin-bottom: 20px;
+    
+    .header-center {
+        position: fixed;
+        top: 60px;
+        left: 0;
+        right: 0;
+        background-color: #79006b;
+        flex-direction: column;
+        padding: 20px;
+        display: none;
+        z-index: 99;
     }
-
-    .mobile-nav-menu {
-        list-style: none;
-        padding: 0;
-        margin: 20px 0;
+    
+    .header-center.show {
+        display: flex;
     }
-
-    .mobile-nav-item {
-        margin-bottom: 15px;
+    
+    .nav-menu {
+        margin: 20px 0 0 0;
+        width: 100%;
     }
-
-    .mobile-nav-link {
-        display: block;
-        color: #333;
-        font-size: 16px;
-        text-decoration: none;
-        padding: 8px 0;
-        border-bottom: 1px solid #eee;
+    
+    .nav-menu ul {
+        flex-direction: column;
     }
-
-    .mobile-bonus-points {
-        margin-top: 20px;
-        padding: 10px;
-        background-color: #f8f9fa;
-        border-radius: 8px;
-        text-align: center;
+    
+    .nav-item, .categories-dropdown {
+        margin: 0 0 15px 0;
+    }
+    
+    .header-right {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: #79006b;
+        padding: 15px;
+        display: none;
+        z-index: 99;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .header-right.show {
+        display: flex;
+        justify-content: center;
     }
 }

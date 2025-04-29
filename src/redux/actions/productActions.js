@@ -1,30 +1,134 @@
-import * as productsAPI from '../../services/productsAPI';
-// import {getProducts} from "../../services/productsAPI";
+import axios from 'axios';
+import { 
+  PRODUCT_LIST_REQUEST, 
+  PRODUCT_LIST_SUCCESS, 
+  PRODUCT_LIST_FAIL,
+  PRODUCT_DETAILS_REQUEST,
+  PRODUCT_DETAILS_SUCCESS,
+  PRODUCT_DETAILS_FAIL,
+  PRODUCT_CREATE_REQUEST,
+  PRODUCT_CREATE_SUCCESS,
+  PRODUCT_CREATE_FAIL,
+  PRODUCT_CREATE_RESET
+} from '../constants/productConstants';
 
-// Action Types
-export const FETCH_PRODUCTS_REQUEST = 'FETCH_PRODUCTS_REQUEST';
-export const FETCH_PRODUCTS_SUCCESS = 'FETCH_PRODUCTS_SUCCESS';
-export const FETCH_PRODUCTS_FAILURE = 'FETCH_PRODUCTS_FAILURE';
+// Здесь должен быть правильный базовый URL вашего API
+const API_BASE_URL = 'http://localhost:5000'; // Измените на ваш актуальный URL
 
-// Action Creators
-export const fetchProducts = (filters = {}) => {
-  return async (dispatch) => {
-    dispatch({ type: FETCH_PRODUCTS_REQUEST });
+// Получение всех продуктов
+export const listProducts = () => async (dispatch) => {
+  try {
+    dispatch({ type: PRODUCT_LIST_REQUEST });
 
-    try {
-      const response = await productsAPI.getProducts(filters);
-      
-      dispatch({
-        type: FETCH_PRODUCTS_SUCCESS,
-        payload: response.products
-      });
-    } catch (error) {
-      dispatch({
-        type: FETCH_PRODUCTS_FAILURE,
-        payload: error.response?.data?.message || error.message
-      });
-    }
-  };
+    // Добавляем базовый URL к запросу
+    const { data } = await axios.get(`${API_BASE_URL}/api/products`);
+
+    dispatch({
+      type: PRODUCT_LIST_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    dispatch({
+      type: PRODUCT_LIST_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
 };
 
-// Аналогично для других действий с товарами
+// Получение деталей продукта
+export const listProductDetails = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: PRODUCT_DETAILS_REQUEST });
+
+    // Добавляем базовый URL к запросу
+    const { data } = await axios.get(`${API_BASE_URL}/api/products/${id}`);
+
+    dispatch({
+      type: PRODUCT_DETAILS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_DETAILS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+// Создание нового продукта
+export const createProduct = (product) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: PRODUCT_CREATE_REQUEST });
+
+    const { userLogin: { userInfo } } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    // Добавляем базовый URL к запросу
+    const { data } = await axios.post(`${API_BASE_URL}/api/products`, product, config);
+
+    dispatch({
+      type: PRODUCT_CREATE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_CREATE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+// Сброс состояния создания продукта
+export const resetProductCreate = () => (dispatch) => {
+  dispatch({ type: PRODUCT_CREATE_RESET });
+};
+
+// Загрузка изображения продукта
+export const uploadProductImage = (formData) => async (dispatch, getState) => {
+  try {
+    const { userLogin: { userInfo } } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    // Добавляем базовый URL к запросу
+    const { data } = await axios.post(`${API_BASE_URL}/api/upload`, formData, config);
+
+    return data; // Возвращаем путь к изображению
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+// Получение списка категорий для формы создания продукта
+export const listCategories = () => async (dispatch) => {
+  try {
+    // Добавляем базовый URL к запросу
+    const { data } = await axios.get(`${API_BASE_URL}/api/categories`);
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
