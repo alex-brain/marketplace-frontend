@@ -69,7 +69,7 @@ const Home = () => {
   const dispatch = useDispatch();
   
   // Используем корректную структуру для селектора
-  const productList = useSelector((state) => state.productList || {});
+  const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
   
   // Создаем совместимую с кодом структуру productItems
@@ -141,6 +141,7 @@ const Home = () => {
     // Загрузка товаров при монтировании компонента
     const loadProducts = async () => {
       await dispatch(listProducts());
+      console.log('Товары после загрузки:', productItems); // Добавьте это
       // После первой загрузки изменяем флаг
       setTimeout(() => {
         setIsFirstLoad(false);
@@ -167,70 +168,41 @@ const Home = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (Array.isArray(productItems) && productItems.length > 0) {
-      // Добавим индикаторы для разных типов товаров
-      const enhancedProducts = productItems.map(product => {
+    if (Array.isArray(products) && products.length > 0) {
+      // Обработка полученных продуктов
+      const enhancedProducts = products.map(product => {
         const enhanced = { ...product };
         
-        // Случайно определяем новый товар для демонстрации
+        // Проверка на новинки - товары созданные в последние 14 дней
         if (product.created_at && new Date(product.created_at) > new Date(Date.now() - 14 * 24 * 60 * 60 * 1000)) {
           enhanced.isNew = true;
         }
         
         // Для товаров со скидкой
-        if (product.discount_percent > 0 || product.sale_price < product.price) {
+        if (product.discount > 0) {
           enhanced.onSale = true;
-          enhanced.discountPercent = product.discount_percent || Math.round((1 - product.sale_price/product.price) * 100);
+          enhanced.discountPercent = product.discount;
         }
         
         return enhanced;
       });
       
-      // Устанавливаем избранные товары (например, с пометкой featured)
-      const featured = enhancedProducts.filter(product => product.featured);
-      setFeaturedProducts(featured.length > 0 ? featured.slice(0, 8) : enhancedProducts.slice(0, 4));
-
+      // Настройка разных секций с товарами
+      setFeaturedProducts(enhancedProducts.filter(p => p.featured).slice(0, 8));
+      
       // Сортируем по дате создания для новых поступлений
-      const newProducts = [...enhancedProducts]
-        .sort((a, b) => new Date(b.created_at || Date.now()) - new Date(a.created_at || Date.now()));
+      const newProducts = [...enhancedProducts].sort((a, b) => 
+        new Date(b.created_at || Date.now()) - new Date(a.created_at || Date.now())
+      );
       setNewArrivals(newProducts.slice(0, 8));
-
-      // Для примера: товары с наибольшими продажами
-      const popular = [...enhancedProducts]
-        .sort((a, b) => (b.sales_count || 0) - (a.sales_count || 0));
+  
+      // Сортируем по популярности
+      const popular = [...enhancedProducts].sort((a, b) => 
+        (b.sales_count || 0) - (a.sales_count || 0)
+      );
       setBestSellers(popular.slice(0, 8));
-    } else if (!loading && !error) {
-      // Если нет данных и нет загрузки/ошибки, добавляем примеры
-      console.log('Используем демо-данные для отображения');
-      
-      const demoProducts = [
-        { 
-          id: 1,
-          name: 'Электрическая M4A1 реплика',
-          price: 15000,
-          image: '/images/products/m4a1.jpg',
-          isNew: true 
-        },
-        { 
-          id: 2,
-          name: 'Тактический жилет CIRAS',
-          price: 8000,
-          image: '/images/products/vest.jpg',
-          onSale: true,
-          discountPercent: 15
-        },
-        { 
-          id: 3,
-          name: 'Пистолет Glock 17',
-          price: 6500,
-          image: '/images/products/glock.jpg'
-        },
-      ];
-      
-      setFeaturedProducts(demoProducts);
-      setNewArrivals(demoProducts);      setBestSellers(demoProducts);
     }
-  }, [productItems, loading, error]);
+  }, [products]);
 
   // Функция для отображения категорий
   const renderCategories = () => {

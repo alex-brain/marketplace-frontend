@@ -1,13 +1,25 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-// import { addToCart } from '../../redux/actions/cartActions';
+import { addToCart } from '../../redux/actions/cartActions';
+import Rating from './Rating';
+import Button from './Buttons';
+// import './ProductCard.css';
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product,showAddToCart=true,variant='default' }) => {
   const dispatch = useDispatch();
+  const { isAuthenticated } = useSelector(state => state.auth);
 
-  const handleAddToCart = () => {
-    // dispatch(addToCart(product.id, 1));
+  const handleAddToCart = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!isAuthenticated) {
+      // Если пользователь не авторизован, перенаправляем на страницу логина
+      window.location.href = '/login?redirect=' + encodeURIComponent(window.location.pathname);
+      return;
+    }
+
+    dispatch(addToCart(product.id, 1)); // Вызываем действие addToCart
   };
 
   return (

@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import {Provider, useDispatch, useSelector} from 'react-redux';
 import { checkAuth } from './redux/actions/authActions';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // Компоненты общего назначения
 import Header from './components/common/Header';
@@ -9,13 +11,14 @@ import Footer from './components/common/Footer';
 
 // Публичные страницы
 import Home from './components/pages/Home';
+
 // import ProductDetail from './components/products/ProductDetail';
 import Login from './components/pages/LoginPage';
 import Register from './components/pages/RegisterPage';
 import store from "./redux/store";
 
 // Страницы для авторизованных пользователей
-// import Cart from './components/cart/Cart';
+import Cart from './components/pages/Cart';
 // import Checkout from './components/orders/Checkout';
 // import OrderConfirmation from './components/orders/OrderConfirmation';
 // import OrderHistory from './components/orders/OrderHistory';
@@ -67,9 +70,12 @@ const App = () => {
             {/*<Route path="/products/:id" element={<ProductDetail />} />*/}
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            
+ 
+
 
             {/* Маршруты для авторизованных пользователей */}
-            {/*<Route
+            <Route
               path="/cart"
               element={
                 <PrivateRoute>
@@ -77,7 +83,7 @@ const App = () => {
                 </PrivateRoute>
               }
             />
-            <Route
+            {/*<Route
               path="/checkout"
               element={
                 <PrivateRoute>
@@ -149,6 +155,7 @@ const App = () => {
           </Routes>
         </main>
         <Footer />
+        <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
       </div>
     </Router>
   );

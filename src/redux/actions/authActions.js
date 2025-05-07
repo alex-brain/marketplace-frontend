@@ -74,8 +74,8 @@ export const login = ({email, password}) => async (dispatch) => {
     dispatch({
       type: AUTH_SUCCESS,
       payload: {
-        token: response.data.token,
-        user: response.data.user
+        token: response.token,
+        user: response.user
       }
     });
 

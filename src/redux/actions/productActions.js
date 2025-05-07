@@ -22,13 +22,14 @@ export const listProducts = () => async (dispatch) => {
 
     // Добавляем базовый URL к запросу
     const { data } = await axios.get(`${API_BASE_URL}/api/products`);
+    console.log('Данные от API:', data); // Добавьте это
 
     dispatch({
       type: PRODUCT_LIST_SUCCESS,
       payload: data,
     });
   } catch (error) {
-    console.error('Error fetching products:', error);
+    console.error('Ошибка загрузки товаров:', error);
     dispatch({
       type: PRODUCT_LIST_FAIL,
       payload:
