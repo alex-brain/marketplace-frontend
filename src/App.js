@@ -4,6 +4,7 @@ import {Provider, useDispatch, useSelector} from 'react-redux';
 import { checkAuth } from './redux/actions/authActions';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { setAuthToken } from './utils/setAuthToken';
 
 // Компоненты общего назначения
 import Header from './components/common/Header';
@@ -25,12 +26,16 @@ import Cart from './components/pages/Cart';
 // import Profile from './components/user/Profile';
 
 // Страницы администратора (продавца)
-// import Dashboard from './components/admin/Dashboard';
-// import ProductManagement from './components/admin/ProductManagement';
-// import CategoryManagement from './components/admin/CategoryManagement';
-// import OrderManagement from './components/admin/OrderManagement';
+import AdminLogin from './components/admin/adminLogin';
+import AdminLayout from './components/admin/AdminLayout';
+import Dashboard from './components/admin/Dashboard';
+import ProductManagement from './components/admin/ProductManagement';
+import OrderManagement from './components/admin/orderManagement';
+import AdminRoute from './AdminRoute';
+//import CategoryManagement from './components/admin/CategoryManagement';
 
 // PrivateRoute - компонент для защищенных маршрутов
+
 const PrivateRoute = ({ children, requiredRole = null }) => {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
 
@@ -46,6 +51,8 @@ const PrivateRoute = ({ children, requiredRole = null }) => {
 
   return children;
 };
+
+
 
 const App = () => {
   const dispatch = useDispatch();
@@ -117,38 +124,17 @@ const App = () => {
             />*/}
 
             {/* Маршруты для администратора (продавца) */}
-            {/*<Route
-              path="/admin"
-              element={
-                <PrivateRoute requiredRole="seller">
-                  <Dashboard />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/admin/products"
-              element={
-                <PrivateRoute requiredRole="seller">
-                  <ProductManagement />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/admin/categories"
-              element={
-                <PrivateRoute requiredRole="seller">
-                  <CategoryManagement />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/admin/orders"
-              element={
-                <PrivateRoute requiredRole="seller">
-                  <OrderManagement />
-                </PrivateRoute>
-              }
-            />*/}
+            <Route path="/admin/login" element={<AdminLogin />} />
+        
+        <Route path="/admin" element={<AdminRoute />}>
+          <Route element={<AdminLayout />}>
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="products" element={<ProductManagement />} />
+            <Route path="orders" element={<OrderManagement />} />
+            
+         
+          </Route>
+          </Route>
 
             {/* Маршрут по умолчанию - перенаправление на главную страницу */}
             <Route path="*" element={<Navigate to="/" />} />

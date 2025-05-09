@@ -6,6 +6,7 @@ import { composeWithDevTools } from '@redux-devtools/extension';
 import categoryReducer from './reducers/categoriesReducer';
 import authReducer from './reducers/authReducer';
 import { cartReducer } from './reducers/cartReducer'; 
+import { adminReducer } from './reducers/adminReducer';
 
 import {
   productListReducer,
@@ -23,7 +24,8 @@ const reducer = combineReducers({
   productList: productListReducer,
   productDetails: productDetailsReducer,
   productCreate: productCreateReducer,
-  cart:cartReducer
+  cart:cartReducer,
+  admin: adminReducer
   // Добавьте другие редьюсеры по необходимости
 });
 const initialState = {};
