@@ -168,9 +168,9 @@ const Home = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (Array.isArray(products) && products.length > 0) {
+    if (Array.isArray(products?.products) && products?.products.length > 0) {
       // Обработка полученных продуктов
-      const enhancedProducts = products.map(product => {
+      const enhancedProducts = products?.products.map(product => {
         const enhanced = { ...product };
         
         // Проверка на новинки - товары созданные в последние 14 дней
