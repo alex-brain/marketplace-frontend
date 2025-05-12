@@ -1,59 +1,56 @@
 import {
-  FETCH_PRODUCTS_REQUEST,
-  FETCH_PRODUCTS_SUCCESS,
-  FETCH_PRODUCTS_FAILURE
-} from '../actions/productActions';
+  PRODUCT_LIST_REQUEST,
+  PRODUCT_LIST_SUCCESS,
+  PRODUCT_LIST_FAIL,
+  PRODUCT_DETAILS_REQUEST,
+  PRODUCT_DETAILS_SUCCESS,
+  PRODUCT_DETAILS_FAIL,
+  PRODUCT_CREATE_REQUEST,
+  PRODUCT_CREATE_SUCCESS,
+  PRODUCT_CREATE_FAIL,
+  PRODUCT_CREATE_RESET
+} from '../constants/productConstants';
 
-// Начальное состояние
-const initialState = {
-  products: [],
-  loading: false,
-  error: null,
-  selectedProduct: null,
-};
-
-const productReducer = (state = initialState, action) => {
+export const productListReducer = (state = { products: [] }, action) => {
   switch (action.type) {
-    case 'FETCH_PRODUCTS_START':
-      return {
-        ...state,
-        loading: true,
-        error: null,
-      };
-
-    case 'FETCH_PRODUCTS_SUCCESS':
-      return {
-        ...state,
-        loading: false,
-        products: action.payload,
-        error: null,
-      };
-
-    case 'FETCH_PRODUCTS_FAIL':
-      return {
-        ...state,
-        loading: false,
-        error: action.payload,
-      };
-
-    case 'SELECT_PRODUCT':
-      return {
-        ...state,
-        selectedProduct: action.payload,
-      };
-
-    case 'CLEAR_SELECTED_PRODUCT':
-      return {
-        ...state,
-        selectedProduct: null,
-      };
-
-    // Здесь можно добавить другие кейсы для дополнительных действий с продуктами
-    // например ADD_PRODUCT, UPDATE_PRODUCT, DELETE_PRODUCT и т.д.
-
+    case PRODUCT_LIST_REQUEST:
+      return { loading: true, products: [] };
+    case PRODUCT_LIST_SUCCESS:
+      return { loading: false, products: action.payload };
+    case PRODUCT_LIST_FAIL:
+      return { loading: false, error: action.payload, products: [] }; // Добавляем products: [] здесь
     default:
       return state;
   }
 };
 
-export default productReducer;
+export const productDetailsReducer = (
+  state = { product: { reviews: [] } },
+  action
+) => {
+  switch (action.type) {
+    case PRODUCT_DETAILS_REQUEST:
+      return { loading: true, ...state };
+    case PRODUCT_DETAILS_SUCCESS:
+      return { loading: false, product: action.payload };
+    case PRODUCT_DETAILS_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const productCreateReducer = (state = {}, action) => {
+  switch (action.type) {
+    case PRODUCT_CREATE_REQUEST:
+      return { loading: true };
+    case PRODUCT_CREATE_SUCCESS:
+      return { loading: false, success: true, product: action.payload };
+    case PRODUCT_CREATE_FAIL:
+      return { loading: false, error: action.payload };
+    case PRODUCT_CREATE_RESET:
+      return {};
+    default:
+      return state;
+  }
+};

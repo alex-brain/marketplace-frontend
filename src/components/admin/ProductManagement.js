@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  fetchProducts,
+//  fetchProducts,
   createProduct,
-  updateProduct,
-  deleteProduct
+  //updateProduct,
+  //deleteProduct
 } from '../../redux/actions/productActions';
-import { fetchCategories } from '../../redux/actions/categoryActions';
+//import { fetchCategories } from '../../redux/actions/categoryActions';
 
 const ProductManagement = () => {
   const dispatch = useDispatch();
-  const { products, loading, error } = useSelector(state => state.products);
-  const { categories } = useSelector(state => state.categories);
+  const { products = [], loading, error } = useSelector(state => state.products || {});
+  const { categories = [] } = useSelector(state => state.categories || {});
   const [editMode, setEditMode] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [formData, setFormData] = useState({
@@ -23,16 +23,16 @@ const ProductManagement = () => {
     image: null
   });
 
-  // Загрузка товаров и категорий при монтировании компонента
-  useEffect(() => {
-    dispatch(fetchProducts());
-    dispatch(fetchCategories());
-  }, [dispatch]);
+  // // Загрузка товаров и категорий при монтировании компонента
+   useEffect(() => {
+       //dispatch(fetchProducts());
+      //// dispatch(fetchCategories());
+     }, [dispatch]);
 
   // Обработчик изменения полей формы
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    if (name === 'image' && files[0]) {
+    if (name === 'image' && files && files[0]) {
       setFormData(prev => ({ ...prev, image: files[0] }));
     } else {
       setFormData(prev => ({ ...prev, [name]: value }));
@@ -44,10 +44,10 @@ const ProductManagement = () => {
     setEditMode(true);
     setSelectedProduct(product);
     setFormData({
-      name: product.name,
-      description: product.description,
-      price: product.price,
-      stock: product.stock,
+      name: product.name || '',
+      description: product.description || '',
+      price: product.price || '',
+      stock: product.stock || '',
       category_id: product.category_id || '',
       image: null
     });
@@ -72,7 +72,7 @@ const ProductManagement = () => {
     e.preventDefault();
 
     if (editMode && selectedProduct) {
-      dispatch(updateProduct(selectedProduct.id, formData));
+  //    dispatch(updateProduct(selectedProduct.id, formData));
     } else {
       dispatch(createProduct(formData));
     }
@@ -83,7 +83,7 @@ const ProductManagement = () => {
   // Удаление товара
   const handleDelete = (productId) => {
     if (window.confirm('Вы уверены, что хотите удалить этот товар?')) {
-      dispatch(deleteProduct(productId));
+  //    dispatch(deleteProduct(productId));
     }
   };
 
@@ -147,7 +147,7 @@ const ProductManagement = () => {
             onChange={handleChange}
           >
             <option value="">Выберите категорию</option>
-            {categories.map(category => (
+            {categories && categories.map(category => (
               <option key={category.id} value={category.id}>
                 {category.name}
               </option>
@@ -163,13 +163,17 @@ const ProductManagement = () => {
             onChange={handleChange}
             accept="image/*"
           />
-          {editMode && selectedProduct.image_url && (
+          {editMode && selectedProduct && selectedProduct.image_url && (
             <div className="current-image">
               <p>Текущее изображение:</p>
               <img
                 src={`http://localhost:5000${selectedProduct.image_url}`}
                 alt={selectedProduct.name}
                 style={{ width: '100px' }}
+                onError={(e) => {
+                  e.target.src = '/placeholder-image.jpg';
+                  e.target.onerror = null;
+                }}
               />
             </div>
           )}
@@ -201,34 +205,46 @@ const ProductManagement = () => {
         </tr>
         </thead>
         <tbody>
-        {products.map(product => (
-          <tr key={product.id}>
-            <td>{product.id}</td>
-            <td>
-              {product.image_url ? (
-                <img
-                  src={`http://localhost:5000${product.image_url}`}
-                  alt={product.name}
-                  style={{ width: '50px', height: '50px' }}
-                />
-              ) : (
-                'Нет'
-              )}
-            </td>
-            <td>{product.name}</td>
-            <td>{product.category_name || 'Без категории'}</td>
-            <td>${product.price.toFixed(2)}</td>
-            <td>{product.stock}</td>
-            <td>
-              <button onClick={() => handleEdit(product)}>
-                Редактировать
-              </button>
-              <button onClick={() => handleDelete(product.id)}>
-                Удалить
-              </button>
+        {products && products.length > 0 ? (
+          products.map(product => (
+            <tr key={product.id}>
+              <td>{product.id}</td>
+              <td>
+                {product.image_url ? (
+                  <img
+                    src={`http://localhost:5000${product.image_url}`}
+                    alt={product.name}
+                    style={{ width: '50px', height: '50px' }}
+                    onError={(e) => {
+                      e.target.src = '/placeholder-image.jpg';
+                      e.target.onerror = null;
+                    }}
+                  />
+                ) : (
+                  'Нет'
+                )}
+              </td>
+              <td>{product.name || 'Без названия'}</td>
+              <td>{product.category_name || 'Без категории'}</td>
+              <td>${(product.price || 0).toFixed(2)}</td>
+              <td>{product.stock || 0}</td>
+              <td>
+                <button onClick={() => handleEdit(product)}>
+                  Редактировать
+                </button>
+                <button onClick={() => handleDelete(product.id)}>
+                  Удалить
+                </button>
+              </td>
+            </tr>
+          ))
+        ) : (
+          <tr>
+            <td colSpan="7" style={{ textAlign: 'center' }}>
+              Нет доступных товаров
             </td>
           </tr>
-        ))}
+        )}
         </tbody>
       </table>
     </div>

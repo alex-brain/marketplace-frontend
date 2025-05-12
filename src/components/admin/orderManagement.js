@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchOrders, updateOrderStatus } from '../../redux/actions/orderActions';
+//import { fetchOrders, updateOrderStatus } from '../../redux/actions/orderActions';
 
 const OrderManagement = () => {
   const dispatch = useDispatch();
@@ -8,13 +8,13 @@ const OrderManagement = () => {
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [statusFilter, setStatusFilter] = useState('all');
 
-  useEffect(() => {
-    dispatch(fetchOrders());
-  }, [dispatch]);
+//   useEffect(() => {
+//  //   dispatch(fetchOrders());
+//   }, [dispatch]);
 
-  const handleStatusChange = (orderId, newStatus) => {
-    dispatch(updateOrderStatus(orderId, newStatus));
-  };
+//   const handleStatusChange = (orderId, newStatus) => {
+//  //   dispatch(updateOrderStatus(orderId, newStatus));
+//   };
 
   const viewOrderDetails = (order) => {
     setSelectedOrder(order);

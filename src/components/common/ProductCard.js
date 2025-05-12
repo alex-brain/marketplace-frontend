@@ -1,16 +1,12 @@
+// src/components/common/ProductCard.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-// import { addToCart } from '../../redux/actions/cartActions';
+import { addToCart } from '../../redux/actions/cartActions';
 import Rating from './Rating';
 import Button from './Buttons';
-// import './ProductCard.css';
 
-const ProductCard = ({
-                       product,
-                       showAddToCart = true,
-                       variant = 'default' // default, compact, horizontal
-                     }) => {
+const ProductCard = ({ product, showAddToCart = true, variant = 'default' }) => {
   const dispatch = useDispatch();
   const { isAuthenticated } = useSelector(state => state.auth);
 
@@ -19,12 +15,11 @@ const ProductCard = ({
     e.stopPropagation();
 
     if (!isAuthenticated) {
-      // Если пользователь не авторизован, перенаправляем на страницу логина
       window.location.href = '/login?redirect=' + encodeURIComponent(window.location.pathname);
       return;
     }
 
-    // dispatch(addToCart(product.id, 1));
+    dispatch(addToCart(product.id, 1));
   };
 
   // Форматирование цены

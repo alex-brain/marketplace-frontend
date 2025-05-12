@@ -43,7 +43,7 @@ const Header = () => {
       <div className="header-container">
         <div className="header-left">
           <Link to="/" className="logo">
-            <h1>Маркетплейс</h1>
+            <h1>UniTac</h1>
           </Link>
           <button
             className="mobile-menu-button"
@@ -64,6 +64,7 @@ const Header = () => {
             />
             <button type="submit" className="search-button">
               <i className="fas fa-search"></i>
+              
             </button>
           </form>
 
@@ -77,7 +78,7 @@ const Header = () => {
                 onMouseEnter={() => setShowCategoriesMenu(true)}
                 onMouseLeave={() => setShowCategoriesMenu(false)}
               >
-                <span>Категории</span>
+                <span>Категории<i className="fas fa-chevron-down"></i></span>
                {/* {categories.length > 0 && (
                   <div className={`dropdown-menu ${showCategoriesMenu ? 'show' : ''}`}>
                     {categories.map(category => (
