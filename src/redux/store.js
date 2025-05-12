@@ -7,12 +7,12 @@ import categoryReducer from './reducers/categoriesReducer';
 import authReducer from './reducers/authReducer';
 import { cartReducer } from './reducers/cartReducer'; 
 import { adminReducer } from './reducers/adminReducer';
+import { orderReducer } from './reducers/orderReducer';
 
 import {
   productListReducer,
   productDetailsReducer,
   productCreateReducer,
-  
 } from './reducers/productReducer';
 // Импортируйте другие редьюсеры по необходимости
 
@@ -25,7 +25,9 @@ const reducer = combineReducers({
   productDetails: productDetailsReducer,
   productCreate: productCreateReducer,
   cart:cartReducer,
-  admin: adminReducer
+  admin: adminReducer,
+  orders: orderReducer
+
   // Добавьте другие редьюсеры по необходимости
 });
 const initialState = {};

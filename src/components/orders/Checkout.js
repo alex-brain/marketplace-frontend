@@ -7,9 +7,13 @@ import { createOrder } from '../../redux/actions/orderActions';
 const Checkout = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { items, total, loading: cartLoading } = useSelector(state => state.cart);
-  const { loading: orderLoading, error } = useSelector(state => state.orders);
+  const { orders, total, loading: cartLoading } = useSelector(state => state.cart);
+  const cart = useSelector(state => state.cart);
+  console.log('cart', cart)
+  const { loading, error } = useSelector(state => state.orders);
   const { user, isAuthenticated } = useSelector(state => state.auth);
+
+  console.log('orders', orders)
 
   const [formData, setFormData] = useState({
     fullName: '',
@@ -46,9 +50,10 @@ const Checkout = () => {
   };
 
   const handleSubmit = (e) => {
+    console.log('formData', formData)
     e.preventDefault();
 
-    if (items.length === 0) {
+    if (cart.items.length === 0) {
       alert('Ваша корзина пуста');
       return;
     }
@@ -68,7 +73,7 @@ const Checkout = () => {
   };
 
   if (cartLoading) return <div>Загрузка корзины...</div>;
-  if (items.length === 0) return <div>Ваша корзина пуста. <button onClick={() => navigate('/')}>Вернуться к покупкам</button></div>;
+  if (!cart.items || cart.items.length === 0) return <div>Ваша корзина пуста. <button onClick={() => navigate('/')}>Вернуться к покупкам</button></div>;
 
   return (
     <div className="checkout-container">
@@ -187,9 +192,9 @@ const Checkout = () => {
             <button
               type="submit"
               className="place-order-btn"
-              disabled={orderLoading}
+              disabled={loading}
             >
-              {orderLoading ? 'Оформление...' : 'Оформить заказ'}
+              {loading ? 'Оформление...' : 'Оформить заказ'}
             </button>
 
             {error && <div className="error">{error}</div>}
@@ -198,8 +203,8 @@ const Checkout = () => {
 
         <div className="order-summary">
           <h3>Ваш заказ</h3>
-          <div className="summary-items">
-            {items.map(item => (
+          <div className="summary-orders">
+            {cart.items.map(item => (
               <div key={item.id} className="summary-item">
                 <div className="item-name">
                   <span>{item.product.name}</span>

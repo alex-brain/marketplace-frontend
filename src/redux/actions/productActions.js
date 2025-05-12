@@ -68,23 +68,26 @@ export const createProduct = (product) => async (dispatch, getState) => {
   try {
     dispatch({ type: PRODUCT_CREATE_REQUEST });
 
-    const { userLogin: { userInfo } } = getState();
+    /*const { userLogin: { userInfo } } = getState();
 
     const config = {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${userInfo.token}`,
       },
-    };
+    };*/
+    
+    console.log('product', product)
 
     // Добавляем базовый URL к запросу
-    const { data } = await axios.post(`${API_BASE_URL}/api/products`, product, config);
+    const { data } = await axios.post(`${API_BASE_URL}/api/products`, product);
 
     dispatch({
       type: PRODUCT_CREATE_SUCCESS,
       payload: data,
     });
   } catch (error) {
+    console.log('error', error)
     dispatch({
       type: PRODUCT_CREATE_FAIL,
       payload:

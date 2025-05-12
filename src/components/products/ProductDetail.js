@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProductById } from '../../redux/actions/productActions';
+import { listProductDetails } from '../../redux/actions/productActions';
 import { addToCart } from '../../redux/actions/cartActions';
 import Loader from '../common/Loader';
-import Button from '../common/Button';
+import Button from '../common/Buttons';
 import Alert from '../common/Alert';
 import Breadcrumb from '../common/Breadcrumb';
 import ImageGallery from '../common/ImageGallery';
-import Tabs from '../common/Tabs';
+// import Tabs from '../common/Tabs';
 import ProductCard from '../common/ProductCard';
-import { notify } from '../common/Notification'; // Предполагаем, что у нас есть такой компонент
+// import { notify } from '../common/Notifications'; // Предполагаем, что у нас есть такой компонент
 import './ProductDetail.css';
 
 const ProductDetail = () => {
@@ -18,7 +18,12 @@ const ProductDetail = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { product, loading, error, relatedProducts } = useSelector(state => state.products);
+  const { product, loading, error, relatedProducts } = useSelector(state => state.productDetails);
+  
+  console.log('product', product)
+
+  const productData = product?.product
+  
   const { isAuthenticated } = useSelector(state => state.auth);
 
   const [quantity, setQuantity] = useState(1);
@@ -28,7 +33,7 @@ const ProductDetail = () => {
 
   useEffect(() => {
     // Fetch product details when component mounts or id changes
-    dispatch(fetchProductById(id));
+    dispatch(listProductDetails(id));
 
     // Reset quantity when changing product
     setQuantity(1);
@@ -70,7 +75,7 @@ const ProductDetail = () => {
     dispatch(addToCart(id, quantity))
       .then(() => {
         // Show success notification
-        notify('Товар добавлен в корзину', 'success');
+        // notify('Товар добавлен в корзину', 'success');
       })
       .catch(error => {
         // Show error alert
@@ -105,9 +110,11 @@ const ProductDetail = () => {
     }).format(price);
   };
 
-  if (loading && !product) {
+  if (loading || !productData) {
     return <Loader fullPage />;
   }
+  
+  console.log('productData', productData)
 
   if (error) {
     return (
@@ -135,14 +142,14 @@ const ProductDetail = () => {
     { label: 'Товары', path: '/products' }
   ];
 
-  if (product.category_name) {
+  if (productData?.category_name) {
     breadcrumbItems.push({
-      label: product.category_name,
-      path: `/category/${product.category_id}`
+      label: productData.category_name,
+      path: `/category/${productData.category_id}`
     });
   }
 
-  breadcrumbItems.push({ label: product.name });
+  breadcrumbItems.push({ label: productData?.name });
 
   // Prepare images for gallery
   const productImages = product.images && product.images.length > 0
@@ -157,8 +164,8 @@ const ProductDetail = () => {
       label: 'Описание',
       content: (
         <div className="product-description">
-          {product.description ? (
-            <p>{product.description}</p>
+          {productData?.description ? (
+            <p>{productData?.description}</p>
           ) : (
             <p>Описание товара отсутствует.</p>
           )}
@@ -169,10 +176,10 @@ const ProductDetail = () => {
       label: 'Характеристики',
       content: (
         <div className="product-specifications">
-          {product.specifications && product.specifications.length > 0 ? (
+          {productData?.specifications && product.specifications.length > 0 ? (
             <table className="specs-table">
               <tbody>
-              {product.specifications.map((spec, index) => (
+              {productData.specifications.map((spec, index) => (
                 <tr key={index}>
                   <td>{spec.name}</td>
                   <td>{spec.value}</td>
@@ -190,9 +197,9 @@ const ProductDetail = () => {
       label: 'Отзывы',
       content: (
         <div className="product-reviews">
-          {product.reviews && product.reviews.length > 0 ? (
+          {productData?.reviews && productData.reviews.length > 0 ? (
             <div className="reviews-list">
-              {product.reviews.map(review => (
+              {productData.reviews.map(review => (
                 <div key={review.id} className="review-item">
                   <div className="review-header">
                     <span className="review-author">{review.user_name}</span>
@@ -244,42 +251,42 @@ const ProductDetail = () => {
           </div>
 
           <div className="product-info">
-            <h1 className="product-title">{product.name}</h1>
+            <h1 className="product-title">{productData?.name}</h1>
 
             <div className="product-meta">
-              {product.sku && (
-                <div className="product-sku">Артикул: {product.sku}</div>
+              {productData.sku && (
+                <div className="product-sku">Артикул: {productData.sku}</div>
               )}
 
-              {product.rating !== undefined && (
+              {productData.rating !== undefined && (
                 <div className="product-rating">
                   {Array.from({ length: 5 }).map((_, i) => (
                     <i
                       key={i}
-                      className={`fas fa-star ${i < product.rating ? 'filled' : ''}`}
+                      className={`fas fa-star ${i < productData.rating ? 'filled' : ''}`}
                     ></i>
                   ))}
-                  <span>({product.reviews_count || 0} отзывов)</span>
+                  <span>({productData.reviews_count || 0} отзывов)</span>
                 </div>
               )}
             </div>
 
             <div className="product-price-block">
-              {product.old_price && product.old_price > product.price && (
+              {/*{product.old_price && product.old_price > product.price && (
                 <div className="old-price">{formatPrice(product.old_price)}</div>
-              )}
-              <div className="current-price">{formatPrice(product.price)}</div>
+              )}*/}
+              <div className="current-price">{productData.price}</div>
             </div>
 
             <div className="product-availability">
-              {product.stock > 0 ? (
+              {productData.stock > 0 ? (
                 <span className="in-stock">В наличии: {product.stock} шт.</span>
               ) : (
                 <span className="out-of-stock">Нет в наличии</span>
               )}
             </div>
 
-            {product.stock > 0 && (
+            {productData.stock > 0 && (
               <div className="product-actions">
                 <div className="quantity-selector">
                   <button
@@ -344,13 +351,13 @@ const ProductDetail = () => {
         </div>
 
         {/* Вкладки с информацией */}
-        <div className="product-tabs">
+       {/* <div className="product-tabs">
           <Tabs
             tabs={tabs}
             activeTab={activeTab}
             onChange={setActiveTab}
           />
-        </div>
+        </div>*/}
 
         {/* Похожие товары */}
         {relatedProducts && relatedProducts.length > 0 && (

@@ -4,27 +4,31 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import axios from 'axios'; // Временно используем axios напрямую, пока не решим проблему с API
 import './Cart.css';
+import {fetchCart} from "../../redux/actions/cartActions";
 
 const Cart = () => {
-    const [cart, setCart] = useState({ items: [], total: 0 });
-    const [loading, setLoading] = useState(true);
+    // const [cart, setCart] = useState({ items: [], total: 0 });
+    // const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const authState = useSelector(state => state.auth);
+    const cartState = useSelector(state => state.cart);
     const { isAuthenticated } = authState;
+    
+    console.log('cartState', cartState)
   
 
     useEffect(() => {
         if (!isAuthenticated) {
           navigate('/login');
         } else {
-          fetchCart();
+          dispatch(fetchCart());
         }
       }, [isAuthenticated, navigate]);
 
-  const fetchCart = async () => {
+ /* const fetchCart = async () => {
     try {
       setLoading(true);
       const token = localStorage.getItem('token');
@@ -47,7 +51,7 @@ const Cart = () => {
       toast.error('Ошибка при загрузке корзины');
       setLoading(false);
     }
-  };
+  };*/
 
   const updateQuantity = async (itemId, quantity) => {
     try {
@@ -62,7 +66,7 @@ const Cart = () => {
       );
       
       // Обновляем локальное состояние
-      setCart(prevCart => {
+      /*setCart(prevCart => {
         const updatedItems = prevCart.items.map(item => {
           if (item.id === itemId) {
             return { ...item, quantity };
@@ -75,7 +79,7 @@ const Cart = () => {
         }, 0);
         
         return { ...prevCart, items: updatedItems, total: newTotal };
-      });
+      });*/
       
       toast.success('Количество товара обновлено');
     } catch (err) {
@@ -92,7 +96,7 @@ const Cart = () => {
       });
       
       // Обновляем локальное состояние
-      setCart(prevCart => {
+      /*setCart(prevCart => {
         const updatedItems = prevCart.items.filter(item => item.id !== itemId);
         
         const newTotal = updatedItems.reduce((sum, item) => {
@@ -100,7 +104,7 @@ const Cart = () => {
         }, 0);
         
         return { ...prevCart, items: updatedItems, total: newTotal };
-      });
+      });*/
       
       toast.success('Товар удален из корзины');
     } catch (err) {
@@ -116,7 +120,7 @@ const Cart = () => {
         headers: { Authorization: `Bearer ${token}` }
       });
       
-      setCart({ ...cart, items: [], total: 0 });
+      // setCart({ ...cart, items: [], total: 0 });
       toast.success('Корзина очищена');
     } catch (err) {
       console.error("Error clearing cart:", err);
@@ -128,7 +132,7 @@ const Cart = () => {
     navigate('/checkout');
   };
 
-  if (loading) {
+  if (cartState.loading) {
     return <div className="cart-container loading">Загрузка корзины...</div>;
   }
 
@@ -136,7 +140,7 @@ const Cart = () => {
     return <div className="cart-container error">{error}</div>;
   }
 
-  if (!cart.items || cart.items.length === 0) {
+  if (!cartState.items || cartState.items.length === 0) {
     return (
       <div className="cart-container empty">
         <h2>Ваша корзина пуста</h2>
@@ -151,7 +155,7 @@ const Cart = () => {
       <h1>Корзина покупок</h1>
       
       <div className="cart-items">
-        {cart.items.map((item) => (
+        {cartState.items.map((item) => (
           <div key={item.id} className="cart-item">
             <div className="item-image">
               <img 
@@ -200,7 +204,7 @@ const Cart = () => {
       <div className="cart-summary">
         <div className="cart-total">
           <h3>Итого:</h3>
-          <h3>{cart.total} ₽</h3>
+          <h3>{cartState.total} ₽</h3>
         </div>
         
         <div className="cart-actions">

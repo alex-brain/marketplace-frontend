@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 //  fetchProducts,
-  createProduct,
+  createProduct, listProducts,
   //updateProduct,
   //deleteProduct
 } from '../../redux/actions/productActions';
@@ -22,11 +22,14 @@ const ProductManagement = () => {
     category_id: '',
     image: null
   });
-
+  
   // // Загрузка товаров и категорий при монтировании компонента
    useEffect(() => {
-       //dispatch(fetchProducts());
-      //// dispatch(fetchCategories());
+     const loadProducts = async () => {
+       await dispatch(listProducts());
+     };
+
+     loadProducts();
      }, [dispatch]);
 
   // Обработчик изменения полей формы
@@ -70,10 +73,13 @@ const ProductManagement = () => {
   // Отправка формы
   const handleSubmit = (e) => {
     e.preventDefault();
+    
+    console.log('editMode, selectedProduct', editMode, selectedProduct)
 
     if (editMode && selectedProduct) {
   //    dispatch(updateProduct(selectedProduct.id, formData));
     } else {
+      console.log('createProduct')
       dispatch(createProduct(formData));
     }
 
@@ -89,6 +95,8 @@ const ProductManagement = () => {
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
+
+  const productList = products?.products || [];
 
   return (
     <div className="product-management">
@@ -205,8 +213,8 @@ const ProductManagement = () => {
         </tr>
         </thead>
         <tbody>
-        {products && products.length > 0 ? (
-          products.map(product => (
+        {productList && productList.length > 0 ? (
+          productList.map(product => (
             <tr key={product.id}>
               <td>{product.id}</td>
               <td>
@@ -226,7 +234,7 @@ const ProductManagement = () => {
               </td>
               <td>{product.name || 'Без названия'}</td>
               <td>{product.category_name || 'Без категории'}</td>
-              <td>${(product.price || 0).toFixed(2)}</td>
+              <td>${(parseFloat(product.price) || 0).toFixed(2)}</td>
               <td>{product.stock || 0}</td>
               <td>
                 <button onClick={() => handleEdit(product)}>

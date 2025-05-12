@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './ImageGallery.css';
+// import './ImageGallery.css';
 
 const ImageGallery = ({
                         images = [],

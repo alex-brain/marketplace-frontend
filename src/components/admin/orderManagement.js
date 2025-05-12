@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-//import { fetchOrders, updateOrderStatus } from '../../redux/actions/orderActions';
+import { fetchOrders } from '../../redux/actions/orderActions';
 
 const OrderManagement = () => {
   const dispatch = useDispatch();
   const { orders, loading, error } = useSelector(state => state.orders);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [statusFilter, setStatusFilter] = useState('all');
+  
+  console.log('orders', orders)
 
-//   useEffect(() => {
-//  //   dispatch(fetchOrders());
-//   }, [dispatch]);
+  useEffect(() => {
+   dispatch(fetchOrders());
+  }, [dispatch]);
 
 //   const handleStatusChange = (orderId, newStatus) => {
 //  //   dispatch(updateOrderStatus(orderId, newStatus));
@@ -72,11 +74,11 @@ const OrderManagement = () => {
               <td>#{order.id}</td>
               <td>{new Date(order.created_at).toLocaleDateString()}</td>
               <td>{order.user_name}</td>
-              <td>${order.total_amount.toFixed(2)}</td>
+              <td>${parseFloat(order.total_amount).toFixed(2)}</td>
               <td>
                 <select
                   value={order.status}
-                  onChange={(e) => handleStatusChange(order.id, e.target.value)}
+                  // onChange={(e) => handleStatusChange(order.id, e.target.value)}
                 >
                   <option value="pending">Ожидает обработки</option>
                   <option value="processing">В обработке</option>

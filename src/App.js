@@ -13,7 +13,7 @@ import Footer from './components/common/Footer';
 // Публичные страницы
 import Home from './components/pages/Home';
 
-// import ProductDetail from './components/products/ProductDetail';
+import ProductDetail from './components/products/ProductDetail';
 import Login from './components/pages/LoginPage';
 import Register from './components/pages/RegisterPage';
 import store from "./redux/store";
@@ -32,6 +32,7 @@ import Dashboard from './components/admin/Dashboard';
 import ProductManagement from './components/admin/ProductManagement';
 import OrderManagement from './components/admin/orderManagement';
 import AdminRoute from './AdminRoute';
+import Checkout from "./components/orders/Checkout";
 //import CategoryManagement from './components/admin/CategoryManagement';
 
 // PrivateRoute - компонент для защищенных маршрутов
@@ -74,7 +75,7 @@ const App = () => {
           <Routes>
             {/* Публичные маршруты */}
             <Route path="/" element={<Home />} />
-            {/*<Route path="/products/:id" element={<ProductDetail />} />*/}
+            <Route path="/products/:id" element={<ProductDetail />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             
@@ -90,7 +91,7 @@ const App = () => {
                 </PrivateRoute>
               }
             />
-            {/*<Route
+            <Route
               path="/checkout"
               element={
                 <PrivateRoute>
@@ -98,7 +99,7 @@ const App = () => {
                 </PrivateRoute>
               }
             />
-            <Route
+            {/*<Route
               path="/order-confirmation"
               element={
                 <PrivateRoute>

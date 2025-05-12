@@ -230,13 +230,13 @@ const Home = () => {
                 key={category.id}
               >
                 <div className="category-image">
-                  <img
+                  {/*<img
                     src={category.image_url}
                     alt={category.name}
                     onError={(e) => {
                       e.target.src = '/images/placeholder.png';
                     }}
-                  />
+                  />*/}
                 </div>
                 <h3 className="category-name">{category.name}</h3>
               </Link>

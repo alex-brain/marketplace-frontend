@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './Alert.css';
+// import './Alert.css';
 
 const Alert = ({
                  type = 'info',
