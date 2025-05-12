@@ -6,33 +6,46 @@ import {
 
 // Начальное состояние
 const initialState = {
-  items: [],
+  products: [],
   loading: false,
-  error: null
+  error: null,
+  selectedProduct: null,
 };
 
 const productReducer = (state = initialState, action) => {
   switch (action.type) {
-    case FETCH_PRODUCTS_REQUEST:
+    case 'FETCH_PRODUCTS_START':
       return {
         ...state,
         loading: true,
-        error: null
+        error: null,
       };
 
-    case FETCH_PRODUCTS_SUCCESS:
+    case 'FETCH_PRODUCTS_SUCCESS':
       return {
         ...state,
         loading: false,
-        items: action.payload,
-        error: null
+        products: action.payload,
+        error: null,
       };
 
-    case FETCH_PRODUCTS_FAILURE:
+    case 'FETCH_PRODUCTS_FAIL':
       return {
         ...state,
         loading: false,
-        error: action.payload
+        error: action.payload,
+      };
+
+    case 'SELECT_PRODUCT':
+      return {
+        ...state,
+        selectedProduct: action.payload,
+      };
+
+    case 'CLEAR_SELECTED_PRODUCT':
+      return {
+        ...state,
+        selectedProduct: null,
       };
 
     // Здесь можно добавить другие кейсы для дополнительных действий с продуктами

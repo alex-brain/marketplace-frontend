@@ -7,30 +7,31 @@ import {
 
 const initialState = {
   token: localStorage.getItem('token'),
-  isAuthenticated: null,
-  loading: true,
+  isAuthenticated: false,
   user: null,
-  error: null
+  loading: false,
+  error: null,
+  bonusPoints: 0,
 };
 
-export default function authReducer(state = initialState, action) {
-  const { type, payload } = action;
-
-  switch (type) {
+const authReducer = (state = initialState, action) => {
+  switch (action.type) {
     case AUTH_REQUEST:
       return {
         ...state,
-        loading: true
+        loading: true,
+        error: null,
       };
 
     case AUTH_SUCCESS:
-      localStorage.setItem('token', payload.token);
+      localStorage.setItem('token', action.payload.token);
       return {
         ...state,
+        token: action.payload.token,
         isAuthenticated: true,
+        user: action.payload.user,
         loading: false,
-        user: payload.user,
-        error: null
+        error: null,
       };
 
     case AUTH_FAILURE:
@@ -39,9 +40,9 @@ export default function authReducer(state = initialState, action) {
         ...state,
         token: null,
         isAuthenticated: false,
-        loading: false,
         user: null,
-        error: payload
+        loading: false,
+        error: action.payload,
       };
 
     case LOGOUT:
@@ -50,11 +51,20 @@ export default function authReducer(state = initialState, action) {
         ...state,
         token: null,
         isAuthenticated: false,
+        user: null,
         loading: false,
-        user: null
+        error: null,
+      };
+
+    case 'UPDATE_BONUS_POINTS':
+      return {
+        ...state,
+        bonusPoints: action.payload,
       };
 
     default:
       return state;
   }
-}
+};
+
+export default authReducer;
