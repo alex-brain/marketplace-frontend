@@ -8,6 +8,7 @@ import ProductCard from '../common/ProductCard';
 import Loader from '../common/Loader';
 import Button from '../common/Buttons';
 import './Home.css';
+import {fetchCategories} from "../../redux/actions/categoriesActions";
 
 // Карусель компонент для слайдера
 const Carousel = ({ items = [] }) => {
@@ -141,6 +142,7 @@ const Home = () => {
     // Загрузка товаров при монтировании компонента
     const loadProducts = async () => {
       await dispatch(listProducts());
+      await dispatch(fetchCategories());
       console.log('Товары после загрузки:', productItems); // Добавьте это
       // После первой загрузки изменяем флаг
       setTimeout(() => {
@@ -225,7 +227,7 @@ const Home = () => {
           <div className="categories-grid">
             {categoriesToRender.map(category => (
               <Link
-                to={`/category/${category.id}`}
+                to={`/categories/${category.id}`}
                 className="category-card"
                 key={category.id}
               >

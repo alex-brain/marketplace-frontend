@@ -2,16 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 //  fetchProducts,
-  createProduct, listProducts,
+  createProduct, listProducts, updateProduct,
   //updateProduct,
   //deleteProduct
 } from '../../redux/actions/productActions';
+import {fetchCategories} from "../../redux/actions/categoriesActions";
 //import { fetchCategories } from '../../redux/actions/categoryActions';
 
 const ProductManagement = () => {
   const dispatch = useDispatch();
   const { products = [], loading, error } = useSelector(state => state.products || {});
-  const { categories = [] } = useSelector(state => state.categories || {});
+  const { items = [] } = useSelector(state => state.categories || {});
   const [editMode, setEditMode] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [formData, setFormData] = useState({
@@ -22,11 +23,14 @@ const ProductManagement = () => {
     category_id: '',
     image: null
   });
+
+  const categories = items;
   
   // // Загрузка товаров и категорий при монтировании компонента
    useEffect(() => {
      const loadProducts = async () => {
        await dispatch(listProducts());
+       await dispatch(fetchCategories());
      };
 
      loadProducts();
@@ -77,7 +81,7 @@ const ProductManagement = () => {
     console.log('editMode, selectedProduct', editMode, selectedProduct)
 
     if (editMode && selectedProduct) {
-  //    dispatch(updateProduct(selectedProduct.id, formData));
+     dispatch(updateProduct(selectedProduct.id, formData));
     } else {
       console.log('createProduct')
       dispatch(createProduct(formData));

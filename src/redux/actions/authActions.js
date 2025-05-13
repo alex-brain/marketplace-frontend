@@ -8,9 +8,11 @@ import {
 
 // Проверка аутентификации пользователя при загрузке приложения
 export const checkAuth = () => async (dispatch) => {
-  const token = localStorage.getItem('token');
+  const userData = localStorage.getItem('user_data');
+  
+  console.log('userData', userData)
 
-  if (!token) {
+  if (!userData) {
     dispatch({ type: AUTH_FAILURE });
     return;
   }
@@ -23,11 +25,11 @@ export const checkAuth = () => async (dispatch) => {
     dispatch({
       type: AUTH_SUCCESS,
       payload: {
-        token,
-        user: response.data.user
+        userData,
       }
     });
   } catch (error) {
+    console.log('error', error)
     dispatch({
       type: AUTH_FAILURE,
       payload: error.response?.data?.message || 'Ошибка авторизации'

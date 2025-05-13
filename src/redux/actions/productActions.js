@@ -9,7 +9,11 @@ import {
   PRODUCT_CREATE_REQUEST,
   PRODUCT_CREATE_SUCCESS,
   PRODUCT_CREATE_FAIL,
-  PRODUCT_CREATE_RESET
+  PRODUCT_CREATE_RESET,
+  PRODUCT_UPDATE_FAIL,
+  PRODUCT_UPDATE_REQUEST,
+  PRODUCT_UPDATE_RESET,
+  PRODUCT_UPDATE_SUCCESS
 } from '../constants/productConstants';
 
 // Здесь должен быть правильный базовый URL вашего API
@@ -76,8 +80,6 @@ export const createProduct = (product) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };*/
-    
-    console.log('product', product)
 
     // Добавляем базовый URL к запросу
     const { data } = await axios.post(`${API_BASE_URL}/api/products`, product);
@@ -90,6 +92,40 @@ export const createProduct = (product) => async (dispatch, getState) => {
     console.log('error', error)
     dispatch({
       type: PRODUCT_CREATE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const updateProduct = (id, product) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: PRODUCT_UPDATE_REQUEST });
+
+    /*const { userLogin: { userInfo } } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };*/
+
+    // Добавляем базовый URL к запросу
+    const { data } = await axios.put(`${API_BASE_URL}/api/products/${id}`, product);
+
+    dispatch({
+      type: PRODUCT_UPDATE_SUCCESS,
+      payload: data,
+    });
+
+    dispatch(listProducts());
+  } catch (error) {
+    console.log('error', error)
+    dispatch({
+      type: PRODUCT_UPDATE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

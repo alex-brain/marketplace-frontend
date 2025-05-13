@@ -33,6 +33,8 @@ import ProductManagement from './components/admin/ProductManagement';
 import OrderManagement from './components/admin/orderManagement';
 import AdminRoute from './AdminRoute';
 import Checkout from "./components/orders/Checkout";
+import CategoryManagement from "./components/admin/CategoryManagement";
+import CategoryProducts from "./components/pages/CategoryProducts";
 //import CategoryManagement from './components/admin/CategoryManagement';
 
 // PrivateRoute - компонент для защищенных маршрутов
@@ -76,6 +78,7 @@ const App = () => {
             {/* Публичные маршруты */}
             <Route path="/" element={<Home />} />
             <Route path="/products/:id" element={<ProductDetail />} />
+            <Route path="/categories/:id" element={<CategoryProducts />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             
@@ -132,7 +135,8 @@ const App = () => {
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="products" element={<ProductManagement />} />
             <Route path="orders" element={<OrderManagement />} />
-            
+            <Route path="categories" element={<CategoryManagement />} />
+
          
           </Route>
           </Route>

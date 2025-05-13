@@ -14,3 +14,7 @@ const categoriesAPI = axios.create({
 export const getCategories = () => {
   return axios.get(`${API_URL}/categories`);
 };
+
+export const createCategory = (data) => {
+  return axios.post(`${API_URL}/categories`, data);
+};
