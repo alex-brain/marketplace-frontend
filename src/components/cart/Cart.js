@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import {
@@ -13,6 +13,9 @@ const Cart = () => {
   const { items, loading, error, total } = useSelector(state => state.cart);
   const { isAuthenticated } = useSelector(state => state.auth);
 
+  // Добавляем состояние для отслеживания ошибок по наличию товаров
+  const [stockErrors, setStockErrors] = useState([]);
+
   useEffect(() => {
     if (isAuthenticated) {
       dispatch(fetchCart());
@@ -24,10 +27,50 @@ const Cart = () => {
   const handleQuantityChange = (itemId, quantity) => {
     if (quantity < 1) return;
     dispatch(updateCartItem(itemId, quantity));
+    // Сбрасываем ошибки при изменении количества
+    setStockErrors([]);
   };
 
   const handleRemoveItem = (itemId) => {
     dispatch(removeFromCart(itemId));
+    // Сбрасываем ошибки при удалении товара
+    setStockErrors([]);
+  };
+
+  // Функция для проверки наличия товаров перед переходом к оформлению
+  const checkStockAvailability = () => {
+    const errors = [];
+
+    items.forEach(item => {
+      if (item.quantity > item.product.stock) {
+        errors.push({
+          productId: item.product.id,
+          productName: item.product.name,
+          requestedQuantity: item.quantity,
+          availableStock: item.product.stock
+        });
+      }
+    });
+
+    return errors;
+  };
+
+  const onCheckout = (e) => {
+    e.preventDefault();
+
+    // Проверяем наличие товаров
+    const stockIssues = checkStockAvailability();
+    console.log('stockIssues', stockIssues)
+
+    if (stockIssues.length > 0) {
+      // Если есть проблемы с наличием, отменяем переход и показываем ошибки
+      setStockErrors(stockIssues);
+      // Прокручиваем страницу вверх, чтобы ошибки были видны
+      window.scrollTo(0, 0);
+    } else {
+      // Если всё в порядке, очищаем ошибки
+      setStockErrors([]);
+    }
   };
 
   if (loading) return <div>Loading...</div>;
@@ -36,6 +79,22 @@ const Cart = () => {
   return (
     <div className="cart-container">
       <h2>Корзина</h2>
+
+      {/* Отображение ошибок по наличию товаров */}
+      {stockErrors.length > 0 && (
+        <div className="stock-errors">
+          <h3>Невозможно оформить заказ</h3>
+          <ul>
+            {stockErrors.map((error, index) => (
+              <li key={index} className="stock-error-item">
+                Товар "{error.productName}" - запрошено {error.requestedQuantity} шт.,
+                но на складе доступно только {error.availableStock} шт.
+              </li>
+            ))}
+          </ul>
+          <p>Пожалуйста, уменьшите количество или удалите товары, которых нет в наличии.</p>
+        </div>
+      )}
 
       {items.length === 0 ? (
         <div className="empty-cart">
@@ -61,6 +120,14 @@ const Cart = () => {
                 <div className="item-details">
                   <h3>{item.product.name}</h3>
                   <p className="item-price">${item.product.price.toFixed(2)}</p>
+
+                  {/* Показываем информацию о наличии */}
+                  <p className="item-stock">
+                    В наличии: {item.product.stock} шт.
+                    {item.quantity > item.product.stock && (
+                      <span className="stock-warning"> (Недостаточно!)</span>
+                    )}
+                  </p>
                 </div>
 
                 <div className="item-quantity">
@@ -70,10 +137,11 @@ const Cart = () => {
                   >
                     -
                   </button>
-                  <span>{item.quantity}</span>
+                  <span className={item.quantity > item.product.stock ? "quantity-error" : ""}>
+                    {item.quantity}
+                  </span>
                   <button
                     onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
-                    disabled={item.quantity >= item.product.stock}
                   >
                     +
                   </button>
@@ -99,7 +167,7 @@ const Cart = () => {
               <span>${total.toFixed(2)}</span>
             </div>
 
-            <Link to="/checkout" className="checkout-button">
+            <Link onClick={onCheckout} to="/checkout" className="checkout-button">
               Оформить заказ
             </Link>
 

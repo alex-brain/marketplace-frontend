@@ -3,17 +3,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { fetchCart } from '../../redux/actions/cartActions';
 import { createOrder } from '../../redux/actions/orderActions';
+import './Checkout.css'; // Предполагаю, что есть файл стилей
 
 const Checkout = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { orders, total, loading: cartLoading } = useSelector(state => state.cart);
   const cart = useSelector(state => state.cart);
-  console.log('cart', cart)
   const { loading, error } = useSelector(state => state.orders);
   const { user, isAuthenticated } = useSelector(state => state.auth);
 
-  console.log('orders', orders)
+  // Добавляем состояние для модального окна
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
 
   const [formData, setFormData] = useState({
     fullName: '',
@@ -23,8 +24,11 @@ const Checkout = () => {
     city: '',
     postalCode: '',
     country: '',
-    paymentMethod: 'card' // По умолчанию оплата картой
+    paymentMethod: 'card'
   });
+
+  // Переменная для хранения данных заказа перед оплатой
+  const [orderData, setOrderData] = useState(null);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -32,16 +36,30 @@ const Checkout = () => {
       return;
     }
 
-    // Загрузка корзины и предзаполнение формы данными пользователя
     dispatch(fetchCart());
 
-    if (user) {
-      setFormData(prev => ({
-        ...prev,
-        fullName: user.name || '',
-        email: user.email || ''
-      }));
+    let userData = {
+      fullName: user?.name || '',
+      email: user?.email || '',
+    };
+
+    const userOrderData = localStorage.getItem('userOrderData');
+    if (userOrderData) {
+      const orderData = JSON.parse(userOrderData);
+
+      userData = {
+        ...userData,
+        phone: orderData.phone || '',
+        address: orderData.address || '',
+        city: orderData.city || '',
+        postalCode: orderData.postalCode || '',
+        country: orderData.country || '',
+        paymentMethod: orderData.paymentMethod || 'card'
+      };
     }
+
+    setFormData(userData);
+
   }, [dispatch, isAuthenticated, navigate, user]);
 
   const handleChange = (e) => {
@@ -50,7 +68,6 @@ const Checkout = () => {
   };
 
   const handleSubmit = (e) => {
-    console.log('formData', formData)
     e.preventDefault();
 
     if (cart.items.length === 0) {
@@ -58,18 +75,55 @@ const Checkout = () => {
       return;
     }
 
-    // Создание строки с полным адресом
+    const orderDataForStorage = {
+      phone: formData.phone,
+      address: formData.address,
+      city: formData.city,
+      postalCode: formData.postalCode,
+      country: formData.country,
+      paymentMethod: formData.paymentMethod
+    };
+    localStorage.setItem('userOrderData', JSON.stringify(orderDataForStorage));
+
     const shippingAddress = `${formData.fullName}, ${formData.phone}, ${formData.address}, ${formData.city}, ${formData.postalCode}, ${formData.country}`;
 
-    // Отправка заказа
-    dispatch(createOrder({
-      shippingAddress,
-      paymentMethod: formData.paymentMethod
-    })).then((success) => {
+    // Если выбрана оплата картой, показываем модалку
+    if (formData.paymentMethod === 'card') {
+      setOrderData({
+        shippingAddress,
+        paymentMethod: formData.paymentMethod
+      });
+      setShowPaymentModal(true);
+    } else {
+      // Иначе оформляем заказ как обычно
+      processOrder({
+        shippingAddress,
+        paymentMethod: formData.paymentMethod
+      });
+    }
+  };
+
+  // Новая функция для обработки оформления заказа
+  const processOrder = (data) => {
+    dispatch(createOrder(data)).then((success) => {
       if (success) {
         navigate('/order-confirmation');
       }
     });
+  };
+
+  // Функция закрытия модального окна
+  const closeModal = () => {
+    setShowPaymentModal(false);
+    setOrderData(null);
+  };
+
+  // Функция обработки подтверждения оплаты
+  const handlePaymentConfirmation = () => {
+    if (orderData) {
+      processOrder(orderData);
+    }
+    setShowPaymentModal(false);
   };
 
   if (cartLoading) return <div>Загрузка корзины...</div>;
@@ -83,6 +137,7 @@ const Checkout = () => {
         <div className="checkout-form">
           <h3>Информация для доставки</h3>
           <form onSubmit={handleSubmit}>
+            {/* Сохраняем все поля формы без изменений */}
             <div className="form-group">
               <label>ФИО:</label>
               <input
@@ -223,6 +278,32 @@ const Checkout = () => {
           </div>
         </div>
       </div>
+
+      {/* Модальное окно для оплаты картой */}
+      {showPaymentModal && (
+        <div className="payment-modal-overlay">
+          <div className="payment-modal">
+            <h3>Информация для оплаты</h3>
+            <p>Пожалуйста, переведите сумму ${total.toFixed(2)} на карту:</p>
+            <div className="card-number">1234 5678 9012 3456</div>
+            <p>После перевода нажмите кнопку "Оплатил"</p>
+            <div className="modal-buttons">
+              <button
+                className="close-btn"
+                onClick={closeModal}
+              >
+                Закрыть
+              </button>
+              <button
+                className="confirm-btn"
+                onClick={handlePaymentConfirmation}
+              >
+                Оплатил
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

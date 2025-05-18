@@ -22,7 +22,9 @@ export const getUserProfile = () => async (dispatch, getState) => {
       }
     };
 
-    const { data } = await axios.get('/api/users/profile', config);
+    const { data } = await axios.get('/api/auth/me', config);
+    
+    console.log('data', data)
 
     dispatch({
       type: GET_PROFILE_SUCCESS,

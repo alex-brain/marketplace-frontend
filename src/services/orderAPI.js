@@ -76,7 +76,7 @@ export const createOrder = async (orderData) => {
  */
 export const updateOrderStatus = async (id, status) => {
   try {
-    const response = await orderAPI.put(`/${id}`, { status });
+    const response = await orderAPI.put(`/${id}/status`, { status });
     return response.data;
   } catch (error) {
     throw error.response ? error.response.data : new Error('Failed to update order status');
@@ -90,7 +90,7 @@ export const updateOrderStatus = async (id, status) => {
  */
 export const cancelOrder = async (id) => {
   try {
-    const response = await orderAPI.post(`/${id}/cancel`);
+    const response = await orderAPI.put(`/${id}/cancel`);
     return response.data;
   } catch (error) {
     throw error.response ? error.response.data : new Error('Failed to cancel order');

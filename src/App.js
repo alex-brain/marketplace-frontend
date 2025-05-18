@@ -38,6 +38,7 @@ import AdminRoute from './AdminRoute';
 import Checkout from "./components/orders/Checkout";
 import CategoryManagement from "./components/admin/CategoryManagement";
 import CategoryProducts from "./components/pages/CategoryProducts";
+import SearchProducts from "./components/pages/SearchProducts";
 //import CategoryManagement from './components/admin/CategoryManagement';
 
 // PrivateRoute - компонент для защищенных маршрутов
@@ -67,6 +68,12 @@ const App = () => {
   useEffect(() => {
     dispatch(checkAuth());
   }, [dispatch]);
+  
+  console.log('App', )
+  
+  useEffect(() => {
+    console.log('render App')
+  }, [])
 
   /*if (loading) {
     return <div className="app-loading">Загрузка...</div>;
@@ -80,6 +87,7 @@ const App = () => {
           <Routes>
             {/* Публичные маршруты */}
             <Route path="/" element={<Home />} />
+            <Route path="/search" element={<SearchProducts />} />
             <Route path="/products/:id" element={<ProductDetail />} />
             <Route path="/categories/:id" element={<CategoryProducts />} />
             <Route path="/login" element={<Login />} />

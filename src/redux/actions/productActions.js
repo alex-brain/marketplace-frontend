@@ -13,7 +13,10 @@ import {
   PRODUCT_UPDATE_FAIL,
   PRODUCT_UPDATE_REQUEST,
   PRODUCT_UPDATE_RESET,
-  PRODUCT_UPDATE_SUCCESS
+  PRODUCT_UPDATE_SUCCESS,
+  PRODUCT_SEARCH_FAIL,
+  PRODUCT_SEARCH_REQUEST,
+  PRODUCT_SEARCH_SUCCESS
 } from '../constants/productConstants';
 
 // Здесь должен быть правильный базовый URL вашего API
@@ -172,3 +175,28 @@ export const listCategories = () => async (dispatch) => {
     throw error;
   }
 };
+
+export const searchProducts = (query) => async (dispatch) => {
+  try {
+    dispatch({ type: PRODUCT_SEARCH_REQUEST });
+
+    // Запрос на API поиска
+    const { data } = await axios.get(`${API_BASE_URL}/api/products/search/${query}`);
+    console.log('Результаты поиска:', data);
+
+    dispatch({
+      type: PRODUCT_SEARCH_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    console.error('Ошибка поиска товаров:', error);
+    dispatch({
+      type: PRODUCT_SEARCH_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+

@@ -21,12 +21,12 @@ export const checkAuth = () => async (dispatch) => {
 
   try {
     const response = await authAPI.getCurrentUser();
+    
+    console.log('response', response)
 
     dispatch({
       type: AUTH_SUCCESS,
-      payload: {
-        userData,
-      }
+      payload: response
     });
   } catch (error) {
     console.log('error', error)

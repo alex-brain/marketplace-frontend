@@ -24,12 +24,13 @@ const authReducer = (state = initialState, action) => {
       };
 
     case AUTH_SUCCESS:
+      console.log('action', action)
       localStorage.setItem('token', action.payload.token);
       return {
         ...state,
         token: action.payload.token,
         isAuthenticated: true,
-        user: action.payload.userData,
+        user: action.payload.user,
         loading: false,
         error: null,
       };

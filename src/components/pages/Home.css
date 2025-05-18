@@ -9,7 +9,7 @@
   
 /* Секции страницы */
 section {
-    padding: 60px 0;
+    padding: 60px 0 0 0;
     position: relative;
 }
   
@@ -713,4 +713,8 @@ section {
       font-size: 14px;
       margin-bottom: 15px;
   }
+}
+
+.Toastify {
+    padding: 0;
 }

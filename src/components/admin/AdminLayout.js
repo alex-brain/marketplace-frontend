@@ -7,9 +7,9 @@ import AdminHeader from './AdminHeader';
 const AdminLayout = () => {
   return (
     <div className="admin-layout">
-      <AdminSidebar />
+      {/*<AdminSidebar />*/}
       <div className="admin-main">
-        <AdminHeader />
+        {/*<AdminHeader />*/}
         <div className="admin-content">
           <Outlet />
         </div>

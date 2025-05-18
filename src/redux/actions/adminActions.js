@@ -60,7 +60,7 @@ export const fetchDashboardData = () => async (dispatch) => {
   try {
     dispatch({ type: FETCH_DASHBOARD_REQUEST });
 
-    const { data } = await axios.get('/api/admin/dashboard');
+    const { data } = await axios.get('http://localhost:5000/api/admin/dashboard');
 
     dispatch({
       type: FETCH_DASHBOARD_SUCCESS,

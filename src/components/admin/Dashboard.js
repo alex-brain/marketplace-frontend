@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 //import { fetchDashboardData } from '../../redux/actions/adminActions';
 import { Link } from 'react-router-dom';
+import {fetchDashboardData} from "../../redux/actions/adminActions";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -12,9 +13,9 @@ const Dashboard = () => {
     error 
   } = useSelector(state => state.admin);
 
-  // useEffect(() => {
-  //   dispatch(fetchDashboardData());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchDashboardData());
+  }, [dispatch]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -134,7 +135,7 @@ const Dashboard = () => {
               {popularProducts.map(product => (
                 <div key={product.id} className="product-card">
                   <img 
-                    src={product.image_url ? `http://localhost:5000${product.image_url}` : '/placeholder-image.jpg'} 
+                    // src={product.image_url ? `http://localhost:5000${product.image_url}` : '/placeholder-image.jpg'}
                     alt={product.name || 'Товар'} 
                     onError={e => {
                       e.target.src = '/placeholder-image.jpg';

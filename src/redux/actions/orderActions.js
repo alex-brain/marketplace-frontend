@@ -111,6 +111,7 @@ export const cancelOrder = (orderId) => async (dispatch) => {
     });
 
     toast.success('Заказ успешно отменен');
+    dispatch(fetchOrders);
     return true;
   } catch (error) {
     dispatch({

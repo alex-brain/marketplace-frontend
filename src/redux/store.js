@@ -14,7 +14,7 @@ import { userProfileReducer } from './reducers/userReducers';
 import {
   productListReducer,
   productDetailsReducer,
-  productCreateReducer,
+  productCreateReducer, productSearchReducer,
 } from './reducers/productReducer';
 // Импортируйте другие редьюсеры по необходимости
 
@@ -26,6 +26,7 @@ const reducer = combineReducers({
   productList: productListReducer,
   productDetails: productDetailsReducer,
   productCreate: productCreateReducer,
+  productSearchReducer: productSearchReducer,
   cart:cartReducer,
   admin: adminReducer,
   orders: orderReducer,

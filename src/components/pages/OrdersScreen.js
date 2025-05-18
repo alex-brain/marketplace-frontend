@@ -1,14 +1,21 @@
-import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchOrders } from '../../redux/actions/orderActions';
+import {cancelOrder, fetchOrders} from '../../redux/actions/orderActions';
 import Loader from '../../components/common/Loader';
 import Message from '../../components/common/Message';
 import './OrdersScreen.css';
 
+const STATUSES = {
+  pending: 'Ожидает обработки',
+  processing: 'В обработке',
+  shipped: 'Отправлен',
+  delivered: 'Доставлен',
+  cancelled: 'Отменен',
+}
+
 const OrdersScreen = () => {
   const dispatch = useDispatch();
-  //const [selectedOrder, setSelectedOrder] = useState(null);
+  const [selectedOrder, setSelectedOrder] = useState(null);
   const { loading, error, orders } = useSelector(state => state.orders);
 
   useEffect(() => {
@@ -16,8 +23,12 @@ const OrdersScreen = () => {
   }, [dispatch]);
 
   const viewOrderDetails = (order) => {
-  //  setSelectedOrder(order);
+    setSelectedOrder(selectedOrder && selectedOrder.id === order.id ? null : order);
   };
+
+  const handleCancelOrder = (order) => {
+    dispatch(cancelOrder(order.id));
+  }
 
   return (
     <div className="orders-container">
@@ -27,30 +38,27 @@ const OrdersScreen = () => {
           {orders.length === 0 ? (
             <Message>У вас пока нет заказов</Message>
           ) : (
-            <div className="orders-table-container">
-              <table className="orders-table">
-                <thead>
+            <>
+              <div className="orders-table-container">
+                <table className="orders-table">
+                  <thead>
                   <tr>
                     <th>ID</th>
                     <th>ДАТА</th>
                     <th>СУММА</th>
-                    <th>ОПЛАЧЕН</th>
+                    <th>СТАТУС</th>
                     <th>ДОСТАВЛЕН</th>
                     <th></th>
                   </tr>
-                </thead>
-                <tbody>
+                  </thead>
+                  <tbody>
                   {orders.map(order => (
                     <tr key={order.id}>
                       <td>{order.id}</td>
                       <td>{new Date(order.created_at).toLocaleDateString()}</td>
                       <td>{order.total_amount} ₽</td>
                       <td>
-                        {order.isPaid ? (
-                          order.paidAt.substring(0, 10)
-                        ) : (
-                          <i className="fas fa-times" style={{ color: 'red' }}></i>
-                        )}
+                        {STATUSES[order.status]}
                       </td>
                       <td>
                         {order.isDelivered ? (
@@ -60,15 +68,62 @@ const OrdersScreen = () => {
                         )}
                       </td>
                       <td>
-                        <Link to={`/order/:id${order.id}`} className="btn btn-details">
+                        <button
+                          onClick={() => viewOrderDetails(order)}
+                          className="btn btn-details"
+                        >
                           Детали
-                        </Link>
+                        </button>
+
+                        <button
+                          onClick={() => handleCancelOrder(order)}
+                          className="btn btn-details"
+                        >
+                          Отменить
+                        </button>
                       </td>
                     </tr>
                   ))}
-                </tbody>
-              </table>
-            </div>
+                  </tbody>
+                </table>
+              </div>
+
+              {selectedOrder && (
+                <div className="order-details">
+                  <h3>Детали заказа #{selectedOrder.id}</h3>
+                  <div className="order-info">
+                    <p><strong>Дата:</strong> {new Date(selectedOrder.created_at).toLocaleDateString()}</p>
+                    <p><strong>Статус:</strong> {selectedOrder.status}</p>
+                    <p><strong>Сумма:</strong> {selectedOrder.total_amount} ₽</p>
+                    <p><strong>Адрес доставки:</strong> {selectedOrder.shipping_address}</p>
+                  </div>
+
+                  <h4>Товары в заказе</h4>
+                  <div className="order-items">
+                    <table className="items-table">
+                      <thead>
+                      <tr>
+                        <th>Название</th>
+                        <th>Количество</th>
+                        <th>Цена</th>
+                        <th>Сумма</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      {selectedOrder.items.map(item => (
+                        <tr key={item.id}>
+                          <td>{item.product_name}</td>
+                          <td>{item.quantity}</td>
+                          <td>{item.price} ₽</td>
+                          <td>{(item.price * item.quantity).toFixed(2)} ₽</td>
+                        </tr>
+                      ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
+            </>
           )}
         </>
       )}

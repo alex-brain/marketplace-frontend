@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchOrders } from '../../redux/actions/orderActions';
+import {fetchOrders, updateOrderStatus} from '../../redux/actions/orderActions';
 
 const OrderManagement = () => {
   const dispatch = useDispatch();
@@ -15,7 +15,7 @@ const OrderManagement = () => {
   }, [dispatch]);
 
    const handleStatusChange = (orderId, newStatus) => {
-  //   dispatch(updateOrderStatus(orderId, newStatus));
+    dispatch(updateOrderStatus(orderId, newStatus));
    };
 
   const viewOrderDetails = (order) => {
@@ -32,6 +32,8 @@ const OrderManagement = () => {
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
+  
+  console.log('filteredOrders', filteredOrders)
 
   return (
     <div className="order-management">
