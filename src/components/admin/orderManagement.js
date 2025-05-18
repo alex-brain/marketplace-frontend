@@ -128,7 +128,11 @@ const OrderManagement = () => {
                   <td>{item.product_name}</td>
                   <td>${parseFloat(item.price).toFixed(2)}</td>
                   <td>{item.quantity}</td>
+<<<<<<< HEAD
                   <td>${(parseFloat(item.price * item.quantity)).toFixed(2)}</td>
+=======
+                  <td>${(parseFloat(item.price) * item.quantity).toFixed(2)}</td>
+>>>>>>> f6a298b2211259316e11e834c4e6bae1c48d3b0c
                 </tr>
               ))}
               </tbody>
