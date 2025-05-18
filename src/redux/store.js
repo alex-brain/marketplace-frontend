@@ -8,6 +8,8 @@ import authReducer from './reducers/authReducer';
 import { cartReducer } from './reducers/cartReducer'; 
 import { adminReducer } from './reducers/adminReducer';
 import { orderReducer } from './reducers/orderReducer';
+import { userProfileReducer } from './reducers/userReducers';
+
 
 import {
   productListReducer,
@@ -26,7 +28,9 @@ const reducer = combineReducers({
   productCreate: productCreateReducer,
   cart:cartReducer,
   admin: adminReducer,
-  orders: orderReducer
+  orders: orderReducer,
+  userProfile: userProfileReducer,
+ 
 
   // Добавьте другие редьюсеры по необходимости
 });

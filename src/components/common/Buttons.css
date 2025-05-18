@@ -1,0 +1,148 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Roboto', sans-serif;
+  padding: 10px 20px;
+  min-width: 120px;
+  outline: none;
+}
+
+/* Основные варианты кнопок */
+.btn-primary {
+  background: linear-gradient(135deg, #9c1b85, #6a0157);
+  color: white;
+  box-shadow: 0 4px 10px rgba(106, 1, 87, 0.3);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #a91f91, #7b0165);
+  box-shadow: 0 6px 12px rgba(106, 1, 87, 0.4);
+  transform: translateY(-2px);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 5px rgba(106, 1, 87, 0.3);
+}
+
+.btn-secondary {
+  background: #ff9900;
+  color: white;
+  box-shadow: 0 4px 10px rgba(255, 153, 0, 0.3);
+}
+
+.btn-secondary:hover {
+  background: #ffb03a;
+  box-shadow: 0 6px 12px rgba(255, 153, 0, 0.4);
+  transform: translateY(-2px);
+}
+
+.btn-secondary:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 5px rgba(255, 153, 0, 0.3);
+}
+
+.btn-outline {
+  background: transparent;
+  border: 2px solid #6a0157;
+  color: #6a0157;
+}
+
+.btn-outline:hover {
+  background: rgba(106, 1, 87, 0.1);
+  transform: translateY(-2px);
+}
+
+.btn-outline:active {
+  transform: translateY(0);
+}
+
+.btn-text {
+  background: transparent;
+  color: #6a0157;
+  padding: 8px 16px;
+  min-width: auto;
+}
+
+.btn-text:hover {
+  background: rgba(106, 1, 87, 0.1);
+}
+
+/* Размеры кнопок */
+.btn-small {
+  font-size: 12px;
+  padding: 6px 12px;
+  min-width: 80px;
+}
+
+.btn-medium {
+  font-size: 14px;
+  padding: 10px 20px;
+  min-width: 120px;
+}
+
+.btn-large {
+  font-size: 16px;
+  padding: 12px 24px;
+  min-width: 160px;
+}
+
+/* Кнопка с иконкой */
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+}
+
+.btn-icon i {
+  margin-right: 8px;
+}
+
+/* Состояния кнопок */
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.btn-loading {
+  position: relative;
+  color: transparent;
+}
+
+.btn-loading::after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease infinite;
+}
+
+/* Анимация загрузки */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+  .btn {
+    padding: 8px 16px;
+  }
+  
+  .btn-large {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+}

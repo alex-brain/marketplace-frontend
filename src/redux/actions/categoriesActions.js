@@ -18,7 +18,7 @@ export const fetchCategories = () => {
     dispatch({ type: FETCH_CATEGORIES_REQUEST });
 
     try {
-      const response = await categoriesAPI.getCategories();
+      const response = await categoriesAPI.getAllCategories();
       dispatch({
         type: FETCH_CATEGORIES_SUCCESS,
         payload: response.data.categories

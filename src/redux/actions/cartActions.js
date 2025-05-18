@@ -16,7 +16,7 @@ export const addToCart = (productId, quantity = 1) => async (dispatch, getState)
   try {
     dispatch({ type: ADD_TO_CART_REQUEST });
 
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('auth_token');
     if (!token) {
       throw new Error('Необходима авторизация');
     }

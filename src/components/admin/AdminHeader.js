@@ -16,7 +16,7 @@ const AdminHeader = () => {
           <i className="fas fa-external-link-alt"></i> Перейти в магазин
         </Link>
         <div className="admin-profile-mini">
-          <span>{user ? user.name : 'Администратор'}</span>
+          <span>{user ? user.name : 'Администратор' || 'seller'}</span>
         </div>
       </div>
     </header>

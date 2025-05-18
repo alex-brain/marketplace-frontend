@@ -44,7 +44,7 @@ const ProductCard = ({ product, showAddToCart = true, variant = 'default' }) => 
               alt={product.name}
               onError={(e) => {
                 e.target.onerror = null;
-                e.target.src = '/images/placeholder.png';
+                e.target.src = '/images/logo192.png';
               }}
             />
           ) : (

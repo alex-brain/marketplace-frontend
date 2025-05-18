@@ -1,36 +1,37 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-// import './Button.css';
+import './Buttons.css';
 
 const Button = ({
                   children,
                   type = 'button',
                   variant = 'primary',
                   size = 'medium',
-                  to,
-                  href,
+                  to=null,
+                  href=null,
                   onClick,
                   loading = false,
                   disabled = false,
                   fullWidth = false,
-                  icon,
+                  icon=null,
                   className = '',
                   ...props
                 }) => {
   const buttonClasses = `
-    button 
-    button-${variant} 
-    button-${size} 
-    ${fullWidth ? 'button-full-width' : ''} 
-    ${loading ? 'button-loading' : ''} 
+    btn 
+    btn-${variant} 
+    btn-${size} 
+    ${fullWidth ? 'btn-full-width' : ''} 
+    ${loading ? 'btn-loading' : ''} 
+    ${icon ? 'btn-icon' : ''}
     ${className}
   `;
 
   const content = (
     <>
-      {loading && <span className="button-spinner"></span>}
-      {icon && !loading && <span className="button-icon">{icon}</span>}
-      <span className="button-text">{children}</span>
+      {loading && <span className="spinner"></span>}
+      {icon && !loading && <i className={icon}></i>}
+      {children}
     </>
   );
 

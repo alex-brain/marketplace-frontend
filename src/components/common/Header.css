@@ -27,11 +27,28 @@
     align-items: center;
 }
 
+/* Скрываем кнопку мобильного меню на десктопе */
+.mobile-menu-button {
+    display: none;
+    color: #fff;
+    background: none;
+    border: none;
+    font-size: 22px;
+    margin-left: 15px;
+    cursor: pointer;
+}
+
 /* Стилизация логотипа */
 .logo {
     display: flex;
     align-items: center;
     text-decoration: none;
+    gap: 10px;
+}
+
+.logo-image {
+    height: 40px; /* Высота логотипа */
+    width: 100px; /* Автоматическая ширина для сохранения пропорций */
 }
 
 .logo h1 {
@@ -49,13 +66,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0 20px;
+    margin: 0 30px; /* Увеличил отступы */
 }
 
 .search-form {
     display: flex;
     width: 100%;
     max-width: 500px;
+    margin-right: 20px; /* Добавил отступ между поиском и навигацией */
 }
 
 .search-input {
@@ -90,8 +108,6 @@
     background-color: #e68a00;
 }
 
-
-
 /* Используем Font Awesome иконку для поиска */
 .search-button i {
     font-size: 16px;
@@ -99,7 +115,7 @@
 
 /* Стилизация навигационного меню */
 .nav-menu {
-    margin-left: 20px;
+    margin-left: 10px;
 }
 
 .nav-menu ul {
@@ -107,10 +123,11 @@
     list-style: none;
     margin: 0;
     padding: 0;
+    gap: 25px; /* Равномерные отступы между элементами навигации */
 }
 
 .nav-item {
-    margin-right: 20px;
+    margin: 0; /* Убрал отдельные margin, так как используем gap */
 }
 
 .nav-link, .categories-dropdown span {
@@ -121,6 +138,7 @@
     padding: 5px 0;
     transition: color 0.3s;
     display: block;
+    white-space: nowrap; /* Предотвращает перенос текста */
 }
 
 .nav-link:hover, .categories-dropdown span:hover {
@@ -130,8 +148,12 @@
 /* Стилизация выпадающего меню категорий */
 .categories-dropdown {
     position: relative;
-    margin-right: 20px;
     cursor: pointer;
+}
+
+.categories-dropdown span i {
+    margin-left: 5px;
+    font-size: 12px;
 }
 
 .dropdown-menu {
@@ -180,7 +202,7 @@
     position: relative;
     color: #fff;
     font-size: 20px;
-    margin-right: 20px;
+    margin-right: 25px; /* Увеличил отступ */
     text-decoration: none;
 }
 
@@ -225,17 +247,33 @@
     left: auto;
 }
 
+.user-dropdown .dropdown-menu button {
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    color: #333;
+    padding: 8px 15px;
+    font-size: 14px;
+}
+
+.user-dropdown .dropdown-menu button:hover {
+    background-color: #f5f5f5;
+    color: #79006b;
+}
+
 /* Стилизация кнопок авторизации */
 .auth-buttons {
     display: flex;
 }
 
 .login-button, .register-button {
-    padding: 3px 15px;
+    padding: 8px 15px;
     color: #fff;
     text-decoration: none;
     font-size: 14px;
-    font-weight: 50;
+    font-weight: 500;
     border-radius: 4px;
     transition: background-color 0.3s;
 }
@@ -261,23 +299,21 @@
 /* Адаптивный дизайн */
 @media (max-width: 992px) {
     .header-center {
-        margin: 0 10px;
+        margin: 0 15px;
+    }
+    
+    .nav-menu ul {
+        gap: 15px; /* Уменьшаем расстояние на средних экранах */
     }
 }
 
 @media (max-width: 768px) {
     .mobile-menu-button {
-        display: block;
-        color: #fff;
-        background: none;
-        border: none;
-        font-size: 22px;
-        margin-left: 15px;
-        cursor: pointer;
+        display: block; /* Показываем кнопку меню на мобильных */
     }
     
     .header-center {
-        position: fixed;
+        position: absolute;
         top: 60px;
         left: 0;
         right: 0;
@@ -286,39 +322,57 @@
         padding: 20px;
         display: none;
         z-index: 99;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     }
     
     .header-center.show {
         display: flex;
     }
     
+    .search-form {
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+    
     .nav-menu {
-        margin: 20px 0 0 0;
+        margin: 0;
         width: 100%;
     }
     
     .nav-menu ul {
         flex-direction: column;
-    }
-    
-    .nav-item, .categories-dropdown {
-        margin: 0 0 15px 0;
+        gap: 15px;
     }
     
     .header-right {
-        position: fixed;
-        bottom: 0;
+        position: absolute;
+        top: 60px;
         left: 0;
         right: 0;
         background-color: #79006b;
         padding: 15px;
         display: none;
         z-index: 99;
-        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin-top: 250px; /* Отступ снизу, чтобы не перекрывать header-center */
     }
     
     .header-right.show {
         display: flex;
         justify-content: center;
+    }
+    
+    .header-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .cart-icon {
+        margin-right: 0;
+    }
+    
+    .auth-buttons {
+        justify-content: space-between;
+        width: 100%;
     }
 }

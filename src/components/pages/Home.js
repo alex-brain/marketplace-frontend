@@ -232,14 +232,15 @@ const Home = () => {
                 key={category.id}
               >
                 <div className="category-image">
-                  {/*<img
-                    src={category.image_url}
-                    alt={category.name}
-                    onError={(e) => {
-                      e.target.src = '/images/placeholder.png';
-                    }}
-                  />*/}
-                </div>
+  <img
+    src={category.image_url || 'images/banners/banner2.jpg'}
+    alt={category.name}
+    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+    onError={(e) => {
+      e.target.src = '/images/banners/banner2.jpg';
+    }}
+  />
+</div>
                 <h3 className="category-name">{category.name}</h3>
               </Link>
             ))}
@@ -316,7 +317,7 @@ const Home = () => {
       {renderCategories()}
 
       {/* Секция с избранными товарами */}
-      {renderProductSection('featured-section', 'Рекомендуемые товары', featuredProducts, '/featured', 'Все рекомендуемые')}
+     {/* {renderProductSection('featured-section', 'Рекомендуемые товары', featuredProducts, '/featured', 'Все рекомендуемые')} */}
 
       {/* Секция с новыми поступлениями */}
       {renderProductSection('new-arrivals-section', 'Новые поступления', newArrivals, '/new-arrivals', 'Все новинки')}

@@ -14,9 +14,9 @@ const OrderManagement = () => {
    dispatch(fetchOrders());
   }, [dispatch]);
 
-//   const handleStatusChange = (orderId, newStatus) => {
-//  //   dispatch(updateOrderStatus(orderId, newStatus));
-//   };
+   const handleStatusChange = (orderId, newStatus) => {
+  //   dispatch(updateOrderStatus(orderId, newStatus));
+   };
 
   const viewOrderDetails = (order) => {
     setSelectedOrder(order);
@@ -78,7 +78,7 @@ const OrderManagement = () => {
               <td>
                 <select
                   value={order.status}
-                  // onChange={(e) => handleStatusChange(order.id, e.target.value)}
+                   onChange={(e) => handleStatusChange(order.id, e.target.value)}
                 >
                   <option value="pending">Ожидает обработки</option>
                   <option value="processing">В обработке</option>
@@ -126,9 +126,9 @@ const OrderManagement = () => {
               {selectedOrder.items.map(item => (
                 <tr key={item.id}>
                   <td>{item.product_name}</td>
-                  <td>${item.price.toFixed(2)}</td>
+                  <td>${parseFloat(item.price).toFixed(2)}</td>
                   <td>{item.quantity}</td>
-                  <td>${(item.price * item.quantity).toFixed(2)}</td>
+                  <td>${(parseFloat(item.price * item.quantity)).toFixed(2)}</td>
                 </tr>
               ))}
               </tbody>
@@ -137,7 +137,7 @@ const OrderManagement = () => {
                 <td colSpan="3" style={{ textAlign: 'right' }}>
                   <strong>Итого:</strong>
                 </td>
-                <td>${selectedOrder.total_amount.toFixed(2)}</td>
+                <td>${parseFloat(selectedOrder.total_amount).toFixed(2)}</td>
               </tr>
               </tfoot>
             </table>

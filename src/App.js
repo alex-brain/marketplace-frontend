@@ -24,6 +24,9 @@ import Cart from './components/pages/Cart';
 // import OrderConfirmation from './components/orders/OrderConfirmation';
 // import OrderHistory from './components/orders/OrderHistory';
 // import Profile from './components/user/Profile';
+import ProfileScreen from './components/pages/ProfileScreen';
+import OrdersScreen from './components/pages/OrdersScreen';
+
 
 // Страницы администратора (продавца)
 import AdminLogin from './components/admin/adminLogin';
@@ -59,7 +62,7 @@ const PrivateRoute = ({ children, requiredRole = null }) => {
 
 const App = () => {
   const dispatch = useDispatch();
-  // const { loading } = useSelector((state) => state.auth);
+  const { loading } = useSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(checkAuth());
@@ -81,7 +84,9 @@ const App = () => {
             <Route path="/categories/:id" element={<CategoryProducts />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            
+            <Route path="/profile" element={<ProfileScreen />} />
+          <Route path="/orders" element={<OrdersScreen />} />
+          
  
 
 

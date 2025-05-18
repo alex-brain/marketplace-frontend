@@ -7,8 +7,8 @@ import './Cart.css';
 import {fetchCart} from "../../redux/actions/cartActions";
 
 const Cart = () => {
-    // const [cart, setCart] = useState({ items: [], total: 0 });
-    // const [loading, setLoading] = useState(true);
+     const [cart, setCart] = useState({ items: [], total: 0 });
+     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     
     const navigate = useNavigate();
@@ -59,7 +59,7 @@ const Cart = () => {
         return;
       }
       
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('auth_token');
       await axios.put(`http://localhost:5000/api/cart/items/${itemId}`, 
         { quantity }, 
         { headers: { Authorization: `Bearer ${token}` }}
@@ -90,13 +90,13 @@ const Cart = () => {
 
   const removeItem = async (itemId) => {
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('auth_token');
       await axios.delete(`http://localhost:5000/api/cart/items/${itemId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       
       // Обновляем локальное состояние
-      /*setCart(prevCart => {
+      setCart(prevCart => {
         const updatedItems = prevCart.items.filter(item => item.id !== itemId);
         
         const newTotal = updatedItems.reduce((sum, item) => {
@@ -104,7 +104,7 @@ const Cart = () => {
         }, 0);
         
         return { ...prevCart, items: updatedItems, total: newTotal };
-      });*/
+      });
       
       toast.success('Товар удален из корзины');
     } catch (err) {
@@ -115,7 +115,7 @@ const Cart = () => {
 
   const clearCart = async () => {
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('auth_token');
       await axios.delete('http://localhost:5000/api/cart', {
         headers: { Authorization: `Bearer ${token}` }
       });

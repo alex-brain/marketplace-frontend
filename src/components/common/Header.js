@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../redux/actions/authActions';
+
 // import { fetchCart } from '../../redux/actions/cartActions';
-// import { fetchCategories } from '../../redux/actions/categoryActions';
+import { fetchCategories } from '../../redux/actions/categoriesActions';
 import './Header.css';
 
 const Header = () => {
@@ -15,6 +16,7 @@ const Header = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showCategoriesMenu, setShowCategoriesMenu] = useState(false);
+  const [showUserMenu, setShowUserMenu] = useState(false); // Добавлено состояние для меню пользователя
 
 /*  useEffect(() => {
     dispatch(fetchCategories());
@@ -43,6 +45,7 @@ const Header = () => {
       <div className="header-container">
         <div className="header-left">
           <Link to="/" className="logo">
+          {/* { <img src="/images/logo.jpg" alt="UniTac Logo" className="logo-image" /> } */}
             <h1>UniTac</h1>
           </Link>
           <button
@@ -117,24 +120,25 @@ const Header = () => {
 
             {isAuthenticated ? (
               <div className="user-dropdown">
-                <button className="user-button">
-                  <i className="fas fa-user"></i>
-                  <span>{user.name}</span>
-                </button>
-                <div className="dropdown-menu">
-                  <Link to="/profile" onClick={() => setShowMobileMenu(false)}>
-                    Мой профиль
-                  </Link>
-                  <Link to="/orders" onClick={() => setShowMobileMenu(false)}>
-                    Мои заказы
-                  </Link>
-                  {user.role === 'seller' && (
-                    <Link to="/admin" onClick={() => setShowMobileMenu(false)}>
-                      Панель управления
-                    </Link>
-                  )}
-                  <button onClick={handleLogout}>Выйти</button>
+  <button className="user-button" onClick={() => setShowUserMenu(!showUserMenu)}>
+    <i className="fas fa-user"></i>
+    <span>{user?.name}</span>
+  </button>
+  <div className={`dropdown-menu ${showUserMenu ? 'show' : ''}`}>
+    <Link to="/profile" onClick={() => { setShowUserMenu(false); setShowMobileMenu(false); }}>
+      Мой профиль
+    </Link>
+    <Link to="/orders" onClick={() => { setShowUserMenu(false); setShowMobileMenu(false); }}>
+      Мои заказы
+    </Link>
+    {user?.role === 'seller' && (
+      <Link to="/admin" onClick={() => { setShowUserMenu(false); setShowMobileMenu(false); }}>
+        Панель управления
+      </Link>
+    )}
+    <button onClick={() => { handleLogout(); setShowUserMenu(false); }}>Выйти</button>
                 </div>
+                
               </div>
             ) : (
               <div className="auth-buttons">
