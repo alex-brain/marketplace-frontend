@@ -266,7 +266,7 @@ const Checkout = () => {
                   <span>x{item.quantity}</span>
                 </div>
                 <div className="item-price">
-                  ${(item.product.price * item.quantity).toFixed(2)}
+                  ₽{(item.product.price * item.quantity).toFixed(2)}
                 </div>
               </div>
             ))}
@@ -274,7 +274,7 @@ const Checkout = () => {
 
           <div className="summary-total">
             <span>Итого:</span>
-            <span>${total.toFixed(2)}</span>
+            <span>₽{total.toFixed(2)}</span>
           </div>
         </div>
       </div>
@@ -284,8 +284,8 @@ const Checkout = () => {
         <div className="payment-modal-overlay">
           <div className="payment-modal">
             <h3>Информация для оплаты</h3>
-            <p>Пожалуйста, переведите сумму ${total.toFixed(2)} на карту:</p>
-            <div className="card-number">1234 5678 9012 3456</div>
+            <p>Пожалуйста, переведите сумму ₽{total.toFixed(2)} на карту:</p>
+            <div className="card-number">5469 3001 2711 3857</div>
             <p>После перевода нажмите кнопку "Оплатил"</p>
             <div className="modal-buttons">
               <button

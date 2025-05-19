@@ -8,7 +8,7 @@ import Button from '../common/Buttons';
 import Alert from '../common/Alert';
 import Breadcrumb from '../common/Breadcrumb';
 import ImageGallery from '../common/ImageGallery';
-// import Tabs from '../common/Tabs';
+import Tabs from '../common/Tabs';
 import ProductCard from '../common/ProductCard';
 // import { notify } from '../common/Notifications'; // Предполагаем, что у нас есть такой компонент
 import './ProductDetail.css';
@@ -275,12 +275,12 @@ const ProductDetail = () => {
               {/*{product.old_price && product.old_price > product.price && (
                 <div className="old-price">{formatPrice(product.old_price)}</div>
               )}*/}
-              <div className="current-price">{productData.price}</div>
+              <div className="current-price">{productData.price}₽</div>
             </div>
 
             <div className="product-availability">
               {productData.stock > 0 ? (
-                <span className="in-stock">В наличии: {product.stock} шт.</span>
+                <span className="in-stock">В наличии: {productData.stock} шт.</span>
               ) : (
                 <span className="out-of-stock">Нет в наличии</span>
               )}
@@ -336,7 +336,7 @@ const ProductDetail = () => {
             <div className="additional-info">
               <div className="info-item">
                 <i className="fas fa-truck"></i>
-                <span>Доставка: 1-3 дня</span>
+                <span>Отправка товара в течение 2 рабочих дней</span>
               </div>
               <div className="info-item">
                 <i className="fas fa-undo"></i>
@@ -351,13 +351,13 @@ const ProductDetail = () => {
         </div>
 
         {/* Вкладки с информацией */}
-       {/* <div className="product-tabs">
+       { <div className="product-tabs">
           <Tabs
             tabs={tabs}
             activeTab={activeTab}
             onChange={setActiveTab}
           />
-        </div>*/}
+        </div>}
 
         {/* Похожие товары */}
         {relatedProducts && relatedProducts.length > 0 && (

@@ -1,3 +1,172 @@
+/* Основные стили для страницы оформления заказа */
+.checkout-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.checkout-container h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 10px;
+}
+
+.checkout-layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.checkout-form {
+  flex: 1;
+  min-width: 300px;
+}
+
+.order-summary {
+  flex: 0 0 350px;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+  align-self: flex-start;
+}
+
+.checkout-form h3,
+.order-summary h3 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #444;
+  font-size: 1.3em;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+/* Стили для формы */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+  border-color: #4CAF50;
+  outline: none;
+}
+
+.form-row {
+  display: flex;
+  gap: 15px;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
+/* Стили для методов оплаты */
+.payment-methods {
+  margin-bottom: 20px;
+}
+
+.payment-method {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.payment-method input[type="radio"] {
+  margin-right: 10px;
+  width: auto;
+}
+
+.payment-method label {
+  font-weight: normal;
+}
+
+/* Кнопка оформления заказа */
+.place-order-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 20px;
+}
+
+.place-order-btn:hover {
+  background-color: #3e8e41;
+}
+
+.place-order-btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Сообщение об ошибке */
+.error {
+  color: #f44336;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+/* Стили для списка товаров в корзине */
+.summary-orders {
+  margin-bottom: 20px;
+  max-height: 300px;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.item-name {
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+}
+
+.item-price {
+  font-weight: bold;
+  color: #333;
+}
+
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 15px;
+  margin-top: 10px;
+  border-top: 2px solid #ddd;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
 /* Стили для модального окна */
 .payment-modal-overlay {
     position: fixed;
@@ -68,4 +237,21 @@
 
 .confirm-btn:hover {
     background-color: #3e8e41;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+  .checkout-layout {
+    flex-direction: column;
+  }
+  
+  .order-summary {
+    width: 100%;
+    flex: 1;
+  }
+  
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
 }

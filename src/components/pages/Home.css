@@ -117,6 +117,61 @@ section {
 .product-image:hover img {
     transform: scale(1.05);
 }
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  overflow: hidden;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+.product-info {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.product-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  /* Ограничиваем высоту названия товара */
+  height: 40px; /* Задайте фиксированную высоту для названия */
+  overflow: hidden;
+  display: -webkit-box;
+  
+  -webkit-box-orient: vertical;
+}
+
+.product-price {
+  font-size: 18px;
+  font-weight: 700;
+  color: #ff6b6b;
+  margin-bottom: 15px;
+}
+
+.product-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto; /* Это прижмет нижние элементы вниз */
+}
+
+.product-rating {
+  display: flex;
+  align-items: center;
+}
   
 /* Стили для карточек категорий */
 .categories-section {

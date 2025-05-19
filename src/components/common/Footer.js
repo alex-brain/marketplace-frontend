@@ -10,7 +10,7 @@ const Footer = () => {
       <div className="footer-container">
         <div className="footer-top">
           <div className="footer-column">
-            <h3>Маркетплейс</h3>
+            <h3>UnicornTactics</h3>
             <p>
               Ваш надежный интернет-магазин для покупки качественных товаров
               по лучшим ценам.
@@ -46,7 +46,7 @@ const Footer = () => {
               <li><Link to="/register">Регистрация</Link></li>
               <li><Link to="/profile">Мой профиль</Link></li>
               <li><Link to="/orders">Мои заказы</Link></li>
-              <li><Link to="/wishlist">Избранное</Link></li>
+              
             </ul>
           </div>
 
@@ -55,19 +55,19 @@ const Footer = () => {
             <ul className="contact-info">
               <li>
                 <i className="fas fa-map-marker-alt"></i>
-                <span>ул. Примерная, 123, Москва</span>
+                <span> ул. Зиповская, 5В Литер Ц, г.Краснодар</span>
               </li>
               <li>
                 <i className="fas fa-phone"></i>
-                <span>+7 (123) 456-78-90</span>
+                <span> +7 (908) 693-69-38</span>
               </li>
               <li>
                 <i className="fas fa-envelope"></i>
-                <span>info@marketplace.com</span>
+                <span> info@marketplace.com</span>
               </li>
               <li>
                 <i className="fas fa-clock"></i>
-                <span>Пн-Пт: 9:00 - 18:00</span>
+                <span> ВТ-ВС: 13:30 - 20:30</span>
               </li>
             </ul>
           </div>
@@ -75,7 +75,7 @@ const Footer = () => {
 
         <div className="footer-bottom">
           <div className="copyright">
-            <p>&copy; {currentYear} Marketplace. Все права защищены.</p>
+            <p>&copy; {currentYear} UnicornTactics. Все права защищены.</p>
           </div>
           <div className="payment-methods">
             <i className="fab fa-cc-visa"></i>

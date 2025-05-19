@@ -4,11 +4,11 @@ import {
 //  fetchProducts,
   createProduct, listProducts, updateProduct,
   //updateProduct,
-  //deleteProduct
+  deleteProduct
 } from '../../redux/actions/productActions';
 import {fetchCategories} from "../../redux/actions/categoriesActions";
 //import { fetchCategories } from '../../redux/actions/categoryActions';
-
+import './ProductManagement.css';
 const ProductManagement = () => {
   const dispatch = useDispatch();
   const { products = [], loading, error } = useSelector(state => state.products || {});
@@ -93,7 +93,7 @@ const ProductManagement = () => {
   // Удаление товара
   const handleDelete = (productId) => {
     if (window.confirm('Вы уверены, что хотите удалить этот товар?')) {
-  //    dispatch(deleteProduct(productId));
+     dispatch(deleteProduct(productId));
     }
   };
 
@@ -179,11 +179,11 @@ const ProductManagement = () => {
             <div className="current-image">
               <p>Текущее изображение:</p>
               <img
-                src={`http://localhost:5000${selectedProduct.image_url}`}
+                // src={`http://localhost:5000${selectedProduct.image_url}`}
                 alt={selectedProduct.name}
                 style={{ width: '100px' }}
                 onError={(e) => {
-                  e.target.src = '/placeholder-image.jpg';
+                  // e.target.src = '/placeholder-image.jpg';
                   e.target.onerror = null;
                 }}
               />
@@ -208,7 +208,7 @@ const ProductManagement = () => {
         <thead>
         <tr>
           <th>ID</th>
-          <th>Изображение</th>
+          {/* <th>Изображение</th> */}
           <th>Название</th>
           <th>Категория</th>
           <th>Цена</th>
@@ -221,7 +221,7 @@ const ProductManagement = () => {
           productList.map(product => (
             <tr key={product.id}>
               <td>{product.id}</td>
-              <td>
+              {/* <td>
                 {product.image_url ? (
                   <img
                     src={`http://localhost:5000${product.image_url}`}
@@ -235,9 +235,9 @@ const ProductManagement = () => {
                 ) : (
                   'Нет'
                 )}
-              </td>
+              </td> */}
               <td>{product.name || 'Без названия'}</td>
-              <td>{product.category_name || 'Без категории'}</td>
+              <td>{product.category_id || 'Без категории'}</td>
               <td>${(parseFloat(product.price) || 0).toFixed(2)}</td>
               <td>{product.stock || 0}</td>
               <td>

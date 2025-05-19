@@ -1,10 +1,9 @@
 // src/components/admin/Dashboard.js
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-//import { fetchDashboardData } from '../../redux/actions/adminActions';
 import { Link } from 'react-router-dom';
 import {fetchDashboardData} from "../../redux/actions/adminActions";
-
+import './Dashboard.css';
 const Dashboard = () => {
   const dispatch = useDispatch();
   const { 
@@ -41,7 +40,7 @@ const Dashboard = () => {
           <div className="stat-label">Всего товаров</div>
           <div className="stat-details">
             <div>На складе: {productStats.total_stock || 0}</div>
-            <div>Средняя цена: ${parseFloat(productStats.avg_price || 0).toFixed(2)}</div>
+            <div>Средняя цена: ₽{parseFloat(productStats.avg_price || 0).toFixed(2)}</div>
           </div>
         </div>
 
@@ -50,7 +49,7 @@ const Dashboard = () => {
           <div className="stat-value">{orderStats.total_orders || 0}</div>
           <div className="stat-label">Всего заказов</div>
           <div className="stat-details">
-            <div>Выручка: ${parseFloat(orderStats.total_revenue || 0).toFixed(2)}</div>
+            <div>Выручка: ₽{parseFloat(orderStats.total_revenue || 0).toFixed(2)}</div>
           </div>
         </div>
 
@@ -104,14 +103,14 @@ const Dashboard = () => {
                     <td>#{order.id}</td>
                     <td>{order.user_name || 'Н/Д'}</td>
                     <td>{new Date(order.created_at).toLocaleDateString()}</td>
-                    <td>${parseFloat(order.total_amount || 0).toFixed(2)}</td>
+                    <td>₽{parseFloat(order.total_amount || 0).toFixed(2)}</td>
                     <td>
                       <span className={`status ${order.status || 'unknown'}`}>
                         {order.status || 'Не указан'}
                       </span>
                     </td>
                     <td>
-                      <Link to={`/admin/orders/${order.id}`}>Подробнее</Link>
+                      <Link to={`/admin/orders`}>Подробнее</Link>
                     </td>
                   </tr>
                 ))}
@@ -134,19 +133,19 @@ const Dashboard = () => {
             <div className="product-cards">
               {popularProducts.map(product => (
                 <div key={product.id} className="product-card">
-                  <img 
+                  {/* <img 
                     // src={product.image_url ? `http://localhost:5000${product.image_url}` : '/placeholder-image.jpg'}
                     alt={product.name || 'Товар'} 
                     onError={e => {
                       e.target.src = '/placeholder-image.jpg';
                       e.target.onerror = null;
                     }}
-                  />
+                  /> */}
                   <div className="product-info">
                     <h4>{product.name || 'Без названия'}</h4>
-                    <p>${parseFloat(product.price || 0).toFixed(2)}</p>
+                    <p>₽{parseFloat(product.price || 0).toFixed(2)}</p>
                     <p>Продано: {product.total_quantity || 0} шт.</p>
-                    <Link to={`/admin/products/${product.id}`}>
+                    <Link to={`/admin/products`}>
                       Редактировать
                     </Link>
                   </div>

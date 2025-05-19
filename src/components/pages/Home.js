@@ -354,7 +354,7 @@ const Home = () => {
                 <i className="fas fa-truck-fast"></i>
               </div>
               <h3>Быстрая доставка</h3>
-              <p>Отправляем заказы в день оплаты. Доставка по России от 1 до 5 дней.</p>
+              <p>Отправляем заказы в течение 2 рабочих дней.</p>
             </div>
             <div className="feature">
               <div className="feature-icon">

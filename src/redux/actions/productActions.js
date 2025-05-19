@@ -16,7 +16,10 @@ import {
   PRODUCT_UPDATE_SUCCESS,
   PRODUCT_SEARCH_FAIL,
   PRODUCT_SEARCH_REQUEST,
-  PRODUCT_SEARCH_SUCCESS
+  PRODUCT_SEARCH_SUCCESS,
+  PRODUCT_DELETE_REQUEST,
+  PRODUCT_DELETE_SUCCESS,
+  PRODUCT_DELETE_FAIL
 } from '../constants/productConstants';
 
 // Здесь должен быть правильный базовый URL вашего API
@@ -129,6 +132,39 @@ export const updateProduct = (id, product) => async (dispatch, getState) => {
     console.log('error', error)
     dispatch({
       type: PRODUCT_UPDATE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const deleteProduct = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: PRODUCT_DELETE_REQUEST });
+
+    /*const { userLogin: { userInfo } } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };*/
+
+    // Выполняем DELETE запрос
+    await axios.delete(`${API_BASE_URL}/api/products/${id}`);
+
+    dispatch({
+      type: PRODUCT_DELETE_SUCCESS,
+    });
+    
+    // Обновляем список товаров после удаления
+    dispatch(listProducts());
+  } catch (error) {
+    console.log('Ошибка удаления:', error);
+    dispatch({
+      type: PRODUCT_DELETE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
