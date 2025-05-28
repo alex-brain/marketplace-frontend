@@ -3,7 +3,7 @@ import {thunk} from 'redux-thunk';
 import { composeWithDevTools } from '@redux-devtools/extension';
 
 // Импортируйте ваши редьюсеры
-import categoryReducer from './reducers/categoriesReducer';
+import categoriesReducer from './reducers/categoriesReducer';
 import authReducer from './reducers/authReducer';
 import { cartReducer } from './reducers/cartReducer'; 
 import { adminReducer } from './reducers/adminReducer';
@@ -20,7 +20,7 @@ import {
 
 // Объедините все редьюсеры
 const reducer = combineReducers({
-  categories: categoryReducer,
+  categories: categoriesReducer,
   auth: authReducer,
   products: productListReducer,
   productList: productListReducer,

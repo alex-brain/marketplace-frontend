@@ -45,14 +45,14 @@ const ProductDetail = () => {
   // Handle quantity change
   const handleQuantityChange = (e) => {
     const value = parseInt(e.target.value);
-    if (value > 0 && value <= product.stock) {
+    if (value > 0 && value <= productData.stock) {
       setQuantity(value);
     }
   };
 
   // Increment quantity
   const incrementQuantity = () => {
-    if (quantity < product.stock) {
+    if (quantity < productData.stock) {
       setQuantity(quantity + 1);
     }
   };
@@ -90,6 +90,13 @@ const ProductDetail = () => {
       navigate('/login', { state: { from: `/products/${id}` } });
       return;
     }
+
+    // Добавляем проверку наличия достаточного количества товара
+  if (quantity > productData.stock) {
+    setAlertType('error');
+    setAlertMessage(`Недостаточно товара на складе. Доступно: ${productData.stock} шт.`);
+    return;
+  }
 
     dispatch(addToCart(id, quantity))
       .then(() => {

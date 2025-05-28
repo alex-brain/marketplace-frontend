@@ -6,11 +6,14 @@ import Message from '../../components/common/Message';
 import './OrdersScreen.css';
 
 const STATUSES = {
-  pending: 'Ожидает обработки',
   processing: 'В обработке',
+  awaiting:'Ожидает оплаты',
+  paid:'Оплачен',
   shipped: 'Отправлен',
   delivered: 'Доставлен',
+  ready:'Готов к получению в магазине',
   cancelled: 'Отменен',
+  end:'Завершен'
 }
 
 const OrdersScreen = () => {

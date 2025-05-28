@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Footer.css';
+import ScrollToTop from './ScrollToTop';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -32,10 +33,10 @@ const Footer = () => {
             <h3>Информация</h3>
             <ul>
               <li><Link to="/about">О нас</Link></li>
-              <li><Link to="/shipping">Доставка</Link></li>
-              <li><Link to="/payment">Оплата</Link></li>
-              <li><Link to="/return-policy">Возврат</Link></li>
-              <li><Link to="/faq">FAQ</Link></li>
+              <li><Link to="/about/delivery">Доставка</Link></li>
+              <li><Link to="/about/payment">Оплата</Link></li>
+              <li><Link to="/about/returns">Возврат</Link></li>
+              
             </ul>
           </div>
 

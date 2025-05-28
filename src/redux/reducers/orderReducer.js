@@ -34,11 +34,13 @@ const initialState = {
   success: false,
   counts: {
     all: 0,
-    pending: 0,
     processing: 0,
+    awaiting: 0,
+    paid:0,
     shipped: 0,
     delivered: 0,
-    cancelled: 0
+    cancelled: 0,
+    end:0
   },
   salesStats: {
     salesData: [],

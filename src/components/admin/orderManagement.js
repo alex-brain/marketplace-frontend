@@ -8,7 +8,7 @@ const OrderManagement = () => {
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [statusFilter, setStatusFilter] = useState('all');
   
-  console.log('orders', orders)
+  //console.log('orders', orders)
 
   useEffect(() => {
    dispatch(fetchOrders());
@@ -33,7 +33,7 @@ const OrderManagement = () => {
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
   
-  console.log('filteredOrders', filteredOrders)
+  //console.log('filteredOrders', filteredOrders)
 
   return (
     <div className="order-management">
@@ -46,11 +46,13 @@ const OrderManagement = () => {
           onChange={(e) => setStatusFilter(e.target.value)}
         >
           <option value="all">Все заказы</option>
-          <option value="pending">Ожидает обработки</option>
           <option value="processing">В обработке</option>
+          <option value="awaiting">Ожидает оплаты</option>
+          <option value="paid">Оплачен</option>
           <option value="shipped">Отправлен</option>
           <option value="delivered">Доставлен</option>
           <option value="cancelled">Отменен</option>
+          <option value="end">Завершен</option>
         </select>
       </div>
 
@@ -76,17 +78,19 @@ const OrderManagement = () => {
               <td>#{order.id}</td>
               <td>{new Date(order.created_at).toLocaleDateString()}</td>
               <td>{order.user_name}</td>
-              <td>${parseFloat(order.total_amount).toFixed(2)}</td>
+              <td>₽{parseFloat(order.total_amount).toFixed(2)}</td>
               <td>
                 <select
                   value={order.status}
                    onChange={(e) => handleStatusChange(order.id, e.target.value)}
                 >
-                  <option value="pending">Ожидает обработки</option>
                   <option value="processing">В обработке</option>
+                  <option value="awaiting">Ожидает оплаты</option>
+                  <option value="paid">Оплачен</option>
                   <option value="shipped">Отправлен</option>
                   <option value="delivered">Доставлен</option>
                   <option value="cancelled">Отменен</option>
+                  <option value="end">Завершен</option>
                 </select>
               </td>
               <td>
@@ -128,9 +132,9 @@ const OrderManagement = () => {
               {selectedOrder.items.map(item => (
                 <tr key={item.id}>
                   <td>{item.product_name}</td>
-                  <td>${parseFloat(item.price).toFixed(2)}</td>
+                  <td>₽{parseFloat(item.price).toFixed(2)}</td>
                   <td>{item.quantity}</td>
-                  <td>${(parseFloat(item.price) * item.quantity).toFixed(2)}</td></tr>
+                  <td>₽{(parseFloat(item.price) * item.quantity).toFixed(2)}</td></tr>
               ))}
               </tbody>
               <tfoot>
@@ -138,7 +142,7 @@ const OrderManagement = () => {
                 <td colSpan="3" style={{ textAlign: 'right' }}>
                   <strong>Итого:</strong>
                 </td>
-                <td>${parseFloat(selectedOrder.total_amount).toFixed(2)}</td>
+                <td>₽{parseFloat(selectedOrder.total_amount).toFixed(2)}</td>
               </tr>
               </tfoot>
             </table>

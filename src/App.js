@@ -17,6 +17,7 @@ import ProductDetail from './components/products/ProductDetail';
 import Login from './components/pages/LoginPage';
 import Register from './components/pages/RegisterPage';
 import store from "./redux/store";
+import About from "./components/common/About"; 
 
 // Страницы для авторизованных пользователей
 import Cart from './components/pages/Cart';
@@ -39,6 +40,7 @@ import Checkout from "./components/orders/Checkout";
 import CategoryManagement from "./components/admin/CategoryManagement";
 import CategoryProducts from "./components/pages/CategoryProducts";
 import SearchProducts from "./components/pages/SearchProducts";
+import ScrollToTop from './components/common/ScrollToTop';
 //import CategoryManagement from './components/admin/CategoryManagement';
 
 // PrivateRoute - компонент для защищенных маршрутов
@@ -81,6 +83,7 @@ const App = () => {
 
   return (
     <Router>
+      <ScrollToTop/>
       <div className="app">
         <Header />
         <main className="main-content">
@@ -94,6 +97,7 @@ const App = () => {
             <Route path="/register" element={<Register />} />
             <Route path="/profile" element={<ProfileScreen />} />
           <Route path="/orders" element={<OrdersScreen />} />
+           <Route path="/about/*" element={<About />} />
           
  
 

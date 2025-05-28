@@ -8,6 +8,7 @@ import {
   UPDATE_PROFILE_FAIL
 } from '../constants/userConstants';
 
+const API_URL=process.env.REACT_APP_API_URL || 'http://localhost:5000/api'
 // Получение профиля пользователя
 export const getUserProfile = () => async (dispatch, getState) => {
   try {
@@ -45,7 +46,7 @@ export const updateUserProfile = (userData) => async (dispatch, getState) => {
   try {
     dispatch({ type: UPDATE_PROFILE_REQUEST });
 
-    const { auth: { token } } = getState();
+    const { auth: { token,user } } = getState();
 
     const config = {
       headers: {
@@ -54,8 +55,13 @@ export const updateUserProfile = (userData) => async (dispatch, getState) => {
       }
     };
 
-    const { data } = await axios.put('/api/users/profile', userData, config);
-
+    const { data } = await axios.put(
+      `${API_URL}/auth/update`,
+      {
+        ...userData,
+        id: user.id
+      },
+      config);
     dispatch({
       type: UPDATE_PROFILE_SUCCESS,
       payload: data

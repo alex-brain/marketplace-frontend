@@ -100,10 +100,13 @@ const Cart = () => {
   const clearCart = async () => {
     try {
       const token = localStorage.getItem('auth_token');
-      await axios.delete('http://localhost:5000/api/cart', {
+      await axios.delete('http://localhost:5000/api/cart/clear', {
         headers: { Authorization: `Bearer ${token}` }
       });
 
+      await dispatch(fetchCart());
+
+      setCart({items:[],total:0})
       // Сбрасываем ошибки при очистке корзины
       setStockErrors([]);
       toast.success('Корзина очищена');
