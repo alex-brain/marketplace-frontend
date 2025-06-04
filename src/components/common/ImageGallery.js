@@ -73,8 +73,15 @@ const ImageGallery = ({
     setIsFullscreen(!isFullscreen);
   };
 
+  // Определяем классы для контейнера
+  const containerClasses = [
+    'image-gallery',
+    displayImages.length <= 1 ? 'single-image' : '',
+    thumbnailPosition === 'left' ? 'gallery-horizontal' : ''
+  ].filter(Boolean).join(' ');
+
   return (
-    <div className={`image-gallery ${thumbnailPosition === 'left' ? 'gallery-horizontal' : ''}`}>
+    <div className={containerClasses}>
       <div className="gallery-main">
         <div
           className={`gallery-image-container ${isFullscreen ? 'fullscreen' : ''}`}
@@ -90,6 +97,7 @@ const ImageGallery = ({
             }}
           />
 
+          {/* Управление в fullscreen режиме */}
           {isFullscreen && (
             <>
               <button className="gallery-control close-btn" onClick={(e) => {
@@ -99,7 +107,7 @@ const ImageGallery = ({
                 <i className="fas fa-times"></i>
               </button>
 
-              {selectedIndex > 0 && (
+              {displayImages.length > 1 && selectedIndex > 0 && (
                 <button
                   className="gallery-control prev-btn"
                   onClick={(e) => {
@@ -111,7 +119,7 @@ const ImageGallery = ({
                 </button>
               )}
 
-              {selectedIndex < displayImages.length - 1 && (
+              {displayImages.length > 1 && selectedIndex < displayImages.length - 1 && (
                 <button
                   className="gallery-control next-btn"
                   onClick={(e) => {
@@ -123,12 +131,15 @@ const ImageGallery = ({
                 </button>
               )}
 
-              <div className="gallery-indicator">
-                {selectedIndex + 1} / {displayImages.length}
-              </div>
+              {displayImages.length > 1 && (
+                <div className="gallery-indicator">
+                  {selectedIndex + 1} / {displayImages.length}
+                </div>
+              )}
             </>
           )}
 
+          {/* Управление в обычном режиме - только для множественных изображений */}
           {!isFullscreen && displayImages.length > 1 && (
             <>
               {selectedIndex > 0 && (
@@ -157,6 +168,7 @@ const ImageGallery = ({
             </>
           )}
 
+          {/* Кнопка увеличения - показываем всегда в обычном режиме */}
           {!isFullscreen && (
             <button
               className="gallery-control zoom-btn"
@@ -171,6 +183,7 @@ const ImageGallery = ({
         </div>
       </div>
 
+      {/* Миниатюры - показываем только если изображений больше одного */}
       {displayImages.length > 1 && (
         <div className="gallery-thumbnails">
           {displayImages.map((image, index) => (

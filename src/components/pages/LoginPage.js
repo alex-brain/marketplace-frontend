@@ -25,13 +25,12 @@ const LoginPage = () => {
                 className="login-illustration"
               />
               <div className="login-benefits">
-                <h3>Benefits of Your Account</h3>
+                <h3>Преимущества личного аккаунта</h3>
                 <ul>
-                  <li>Track orders and order history</li>
-                  <li>Save items to your wishlist</li>
-                  <li>Earn and redeem bonus points</li>
-                  <li>Get personalized recommendations</li>
-                  <li>Faster checkout experience</li>
+                  <li>Отслеживайте историю заказов</li>
+                  <li>Сохраняйте товары в корзине</li>
+                  <li>Получайте личные бонусы и рекомендации</li>
+                  <li>Совершайте покупки всего в пару кликов</li>
                 </ul>
               </div>
             </div>

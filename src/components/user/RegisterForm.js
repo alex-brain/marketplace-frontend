@@ -123,8 +123,8 @@ const RegisterForm = () => {
   return (
     <div className="register-form-container">
       <div className="register-form-wrapper">
-        <h2 className="register-form-title">Create Account</h2>
-        <p className="register-form-subtitle">Fill in the form to create your account</p>
+        <h2 className="register-form-title">Создать аккаунт</h2>
+        <p className="register-form-subtitle">Заполните поля формы для создания вашего профиля</p>
 
         {error && (
           <div className="register-form-error-message">
@@ -135,14 +135,14 @@ const RegisterForm = () => {
         <form onSubmit={handleSubmit} className="register-form">
           <div className="form-row">
             <div className="form-group">
-              <label htmlFor="firstName">First Name</label>
+              <label htmlFor="firstName">Фамилия</label>
               <input
                 type="text"
                 id="firstName"
                 name="firstName"
                 value={formData.firstName}
                 onChange={handleChange}
-                placeholder="Your first name"
+                placeholder="Ваша фамилия"
                 className={formErrors.firstName ? 'input-error' : ''}
                 disabled={loading}
               />
@@ -150,14 +150,14 @@ const RegisterForm = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="lastName">Last Name</label>
+              <label htmlFor="lastName">Имя</label>
               <input
                 type="text"
                 id="lastName"
                 name="lastName"
                 value={formData.lastName}
                 onChange={handleChange}
-                placeholder="Your last name"
+                placeholder="Ваше имя"
                 className={formErrors.lastName ? 'input-error' : ''}
                 disabled={loading}
               />
@@ -181,14 +181,14 @@ const RegisterForm = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password">Пароль</label>
             <input
               type="password"
               id="password"
               name="password"
               value={formData.password}
               onChange={handleChange}
-              placeholder="Create a password"
+              placeholder="Придумайте пароль"
               className={formErrors.password ? 'input-error' : ''}
               disabled={loading}
             />
@@ -196,14 +196,14 @@ const RegisterForm = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="confirmPassword">Confirm Password</label>
+            <label htmlFor="confirmPassword">Подтвердите пароль</label>
             <input
               type="password"
               id="confirmPassword"
               name="confirmPassword"
               value={formData.confirmPassword}
               onChange={handleChange}
-              placeholder="Confirm your password"
+              placeholder="Подтвердите свой пароль"
               className={formErrors.confirmPassword ? 'input-error' : ''}
               disabled={loading}
             />
@@ -220,7 +220,7 @@ const RegisterForm = () => {
               disabled={loading}
             />
             <label htmlFor="agreeTerms">
-              I agree to the <Link to="/terms" className="terms-link">Terms of Service</Link> and <Link to="/privacy" className="terms-link">Privacy Policy</Link>
+              Я соглашаюсь с <Link to="/terms" className="terms-link"> Правилами обработки личных данных</Link> и <Link to="/privacy" className="terms-link">Политикой конфиденциальности</Link>
             </label>
             {formErrors.agreeTerms && <p className="error-text">{formErrors.agreeTerms}</p>}
           </div>
@@ -233,36 +233,11 @@ const RegisterForm = () => {
             {loading ? 'Creating Account...' : 'Create Account'}
           </button>
 
-          <div className="register-divider">
-            <span>or</span>
-          </div>
-
-          <div className="social-register-buttons">
-            <button
-              type="button"
-              className="google-register-button"
-              onClick={handleGoogleRegister}
-              disabled={loading || isSubmitting}
-            >
-              <img src="/assets/images/google-icon.svg" alt="Google" />
-              Sign up with Google
-            </button>
-
-            <button
-              type="button"
-              className="facebook-register-button"
-              onClick={handleFacebookRegister}
-              disabled={loading || isSubmitting}
-            >
-              <img src="/assets/images/facebook-icon.svg" alt="Facebook" />
-              Sign up with Facebook
-            </button>
-          </div>
         </form>
 
         <div className="register-form-footer">
           <p>
-            Already have an account? <Link to="/login" className="login-link">Sign in</Link>
+            Уже есть аккаунт? <Link to="/login" className="login-link">Войти</Link>
           </p>
         </div>
       </div>

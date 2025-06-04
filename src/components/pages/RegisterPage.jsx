@@ -25,15 +25,12 @@ const RegisterPage = () => {
                 className="register-illustration"
               />
               <div className="register-benefits">
-                <h3>Why Create an Account?</h3>
+                <h3>Для чего нужен личный аккаунт?</h3>
                 <ul>
-                  <li>Fast and secure checkout</li>
-                  <li>Store multiple shipping addresses</li>
-                  <li>Access your order history</li>
-                  <li>Track your packages</li>
-                  <li>Save items to your wishlist</li>
-                  <li>Receive exclusive offers and discounts</li>
-                  <li>Earn bonus points with purchases</li>
+                  <li>Быстрое оформление заказов</li>
+                  <li>Хранение данных для доставки</li>
+                  <li>История заказов</li>
+                  <li>Получение эксклюзивных предложений</li>
                 </ul>
               </div>
             </div>

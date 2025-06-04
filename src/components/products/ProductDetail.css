@@ -32,8 +32,267 @@
 /* Галерея изображений */
 .product-gallery {
     border-radius: 8px;
-    overflow: hidden;
+    overflow: visible;
     box-shadow: 0 4px 12px rgba(93, 29, 144, 0.1);
+    margin-bottom: 0;
+}
+
+/* Основной контейнер галереи */
+.image-gallery {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+/* Добавляем gap только когда есть миниатюры */
+.image-gallery:not(.single-image) {
+    gap: 15px;
+}
+
+.image-gallery.single-image {
+    gap: 0;
+    margin-bottom: 0;
+}
+/* Скрываем миниатюры когда только одно изображение */
+.image-gallery.single-image .gallery-thumbnails {
+    display: none !important;
+    height: 0;
+    margin: 0;
+    padding: 0;
+}
+
+/* Если только одно изображение, убираем gap */
+.image-gallery:has(.gallery-thumbnails:empty) {
+    gap: 0;
+}
+/* Основное изображение занимает всю высоту при single-image */
+.image-gallery.single-image .gallery-main {
+    margin-bottom: 0;
+}
+
+/* Альтернативный способ для старых браузеров */
+.image-gallery.single-image {
+    gap: 0;
+}
+
+.image-gallery.single-image .gallery-thumbnails {
+    display: none;
+}
+/* Скрываем миниатюры когда только одно изображение */
+.image-gallery.single-image .gallery-thumbnails {
+    display: none;
+}
+
+.image-gallery.gallery-horizontal {
+    flex-direction: row;
+    gap: 20px;
+}
+
+.image-gallery.gallery-horizontal.single-image {
+    gap: 0;
+}
+
+.image-gallery.gallery-horizontal .gallery-main {
+    flex: 1;
+}
+
+.image-gallery.gallery-horizontal .gallery-thumbnails {
+    flex-direction: column;
+    width: 100px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+/* Основное изображение */
+.gallery-main {
+    width: 100%;
+}
+
+.gallery-image-container {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    background: linear-gradient(135deg, #f8f6ff 0%, #f0e8ff 100%);
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: zoom-in;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gallery-image {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.gallery-image-container:hover .gallery-image {
+    transform: scale(1.02);
+}
+
+/* Fullscreen режим */
+.gallery-image-container.fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 9999;
+    cursor: zoom-out;
+    border-radius: 0;
+}
+
+.gallery-image-container.fullscreen .gallery-image {
+    max-width: 90%;
+    max-height: 90%;
+}
+
+/* Кнопки управления */
+.gallery-control {
+    position: absolute;
+    background: rgba(106, 27, 154, 0.8);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.gallery-image-container:hover .gallery-control,
+.gallery-image-container.fullscreen .gallery-control {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.gallery-control:hover {
+    background: rgba(106, 27, 154, 1);
+    transform: scale(1.1);
+}
+
+.prev-btn {
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.next-btn {
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.zoom-btn {
+    top: 15px;
+    right: 15px;
+}
+
+.close-btn {
+    top: 20px;
+    right: 20px;
+    background: rgba(219, 39, 119, 0.8);
+}
+
+.close-btn:hover {
+    background: rgba(219, 39, 119, 1);
+}
+
+/* Индикатор в fullscreen */
+.gallery-indicator {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+}
+
+/* Миниатюры */
+.gallery-thumbnails {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-height: 80px;
+    overflow-x: auto;
+    padding: 5px 0;
+    margin:0;
+}
+.single-image .gallery-thumbnails {
+    display: none !important;
+    height: 0 !important;
+    max-height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+}
+
+.gallery-thumbnail {
+    width: 60px;
+    height: 60px;
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.gallery-thumbnail:hover {
+    border-color: #9c60e5;
+    transform: scale(1.05);
+}
+
+.gallery-thumbnail.active {
+    border-color: #6a1b9a;
+    box-shadow: 0 0 0 1px #6a1b9a;
+}
+
+.gallery-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Placeholder для отсутствующих изображений */
+.image-gallery-placeholder {
+    width: 100%;
+    height: 400px;
+    background: linear-gradient(135deg, #f0e8ff 0%, #e0d8f0 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    color: #6a1b9a;
+    font-size: 16px;
+    border: 2px dashed #e0d8f0;
+}
+
+.image-gallery-placeholder i {
+    font-size: 48px;
+    margin-bottom: 15px;
+    opacity: 0.6;
+}
+
+.image-gallery-placeholder p {
+    margin: 0;
+    font-weight: 500;
 }
 
 /* Блок с информацией о товаре */
@@ -368,7 +627,6 @@
     border-radius: 12px;
     box-shadow: 0 6px 20px rgba(93, 29, 144, 0.08);
 }
-
 .related-products h2 {
     font-size: 24px;
     margin-bottom: 25px;
@@ -381,6 +639,60 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 25px;
+}
+
+/* Скроллбар для thumbnails */
+.gallery-thumbnails::-webkit-scrollbar {
+    height: 4px;
+}
+
+.gallery-thumbnails::-webkit-scrollbar-track {
+    background: #f0e8ff;
+    border-radius: 2px;
+}
+
+.gallery-thumbnails::-webkit-scrollbar-thumb {
+    background: #6a1b9a;
+    border-radius: 2px;
+}
+
+.gallery-thumbnails::-webkit-scrollbar-thumb:hover {
+    background: #5d1d90;
+}
+
+/* Адаптивность для галереи */
+@media (max-width: 768px) {
+    .gallery-image-container {
+        height: 300px;
+    }
+    
+    .image-gallery-placeholder {
+        height: 300px;
+    }
+    
+    .gallery-thumbnails {
+        gap: 8px;
+        max-height: 60px;
+    }
+    
+    .gallery-thumbnail {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .gallery-control {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .prev-btn, .next-btn {
+        left: 10px;
+    }
+    
+    .next-btn {
+        right: 10px;
+        left: auto;
+    }
 }
 
 @media (max-width: 576px) {
@@ -400,6 +712,66 @@
     .old-price {
         margin-right: 0;
         margin-bottom: 5px;
+    }
+    
+    .gallery-image-container {
+        height: 250px;
+    }
+    
+    .image-gallery-placeholder {
+        height: 250px;
+    }
+    
+    .gallery-thumbnails {
+        gap: 6px;
+        max-height: 50px;
+    }
+    
+    .gallery-thumbnail {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .gallery-control {
+        width: 30px;
+        height: 30px;
+        font-size: 12px;
+    }
+    
+    .image-gallery.gallery-horizontal {
+        flex-direction: column;
+    }
+    
+    .image-gallery.gallery-horizontal .gallery-thumbnails {
+        flex-direction: row;
+        width: 100%;
+        max-height: 50px;
+    }
+}
+
+@media (max-width: 480px) {
+    .gallery-image-container {
+        height: 250px;
+    }
+    
+    .image-gallery-placeholder {
+        height: 250px;
+    }
+    
+    .gallery-thumbnails {
+        gap: 6px;
+        max-height: 50px;
+    }
+    
+    .gallery-thumbnail {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .gallery-control {
+        width: 30px;
+        height: 30px;
+        font-size: 12px;
     }
 }
 

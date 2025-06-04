@@ -57,13 +57,13 @@ const LoginForm = () => {
     if (!formData.email.trim()) {
       errors.email = 'Email is required';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      errors.email = 'Email is invalid';
+      errors.email = 'Неправильный формат email';
     }
 
     if (!formData.password) {
       errors.password = 'Password is required';
     } else if (formData.password.length < 6) {
-      errors.password = 'Password must be at least 6 characters';
+      errors.password = 'Пароль должен содержать не менее 6 символов';
     }
 
     setFormErrors(errors);
@@ -91,23 +91,13 @@ const LoginForm = () => {
     }
   };
 
-  // Авторизация через Google
-  const handleGoogleLogin = () => {
-    // Реализация OAuth с Google
-    window.location.href = `${process.env.REACT_APP_API_URL}/auth/google`;
-  };
-
-  // Авторизация через Facebook
-  const handleFacebookLogin = () => {
-    // Реализация OAuth с Facebook
-    window.location.href = `${process.env.REACT_APP_API_URL}/auth/facebook`;
-  };
+ 
 
   return (
     <div className="login-form-container">
       <div className="login-form-wrapper">
-        <h2 className="login-form-title">Sign In</h2>
-        <p className="login-form-subtitle">Welcome back! Please enter your details</p>
+        <h2 className="login-form-title">Войти</h2>
+        <p className="login-form-subtitle"> С возвращением! Введите свои данные для входа</p>
 
         {error && (
           <div className="login-form-error-message">
@@ -124,7 +114,7 @@ const LoginForm = () => {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              placeholder="Enter your email"
+              placeholder="Введите ваш email"
               className={formErrors.email ? 'input-error' : ''}
               disabled={loading}
             />
@@ -132,14 +122,14 @@ const LoginForm = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password">Пароль</label>
             <input
               type="password"
               id="password"
               name="password"
               value={formData.password}
               onChange={handleChange}
-              placeholder="Enter your password"
+              placeholder="Введите свой пароль"
               className={formErrors.password ? 'input-error' : ''}
               disabled={loading}
             />
@@ -156,11 +146,11 @@ const LoginForm = () => {
                 onChange={handleChange}
                 disabled={loading}
               />
-              <label htmlFor="rememberMe">Remember me</label>
+              <label htmlFor="rememberMe">Запомнить меня</label>
             </div>
 
             <Link to="/forgot-password" className="forgot-password-link">
-              Forgot password?
+              Забыли пароль?
             </Link>
           </div>
 
@@ -172,36 +162,10 @@ const LoginForm = () => {
             {loading ? 'Signing In...' : 'Sign In'}
           </button>
 
-          <div className="login-divider">
-            <span>or</span>
-          </div>
-
-          <div className="social-login-buttons">
-            <button
-              type="button"
-              className="google-login-button"
-              onClick={handleGoogleLogin}
-              disabled={loading || isSubmitting}
-            >
-              <img src="/assets/images/google-icon.svg" alt="Google" />
-              Sign in with Google
-            </button>
-
-            <button
-              type="button"
-              className="facebook-login-button"
-              onClick={handleFacebookLogin}
-              disabled={loading || isSubmitting}
-            >
-              <img src="/assets/images/facebook-icon.svg" alt="Facebook" />
-              Sign in with Facebook
-            </button>
-          </div>
         </form>
-
         <div className="login-form-footer">
           <p>
-            Don't have an account? <Link to="/register" className="register-link">Sign up</Link>
+            Нет аккаунта? <Link to="/register" className="register-link">Зарегистрируйтесь</Link>
           </p>
         </div>
       </div>

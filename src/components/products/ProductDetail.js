@@ -107,7 +107,53 @@ const ProductDetail = () => {
         setAlertMessage(error.message || 'Не удалось оформить заказ');
       });
   };
-
+const getProductImages = () => {
+  const images = [];
+  
+  // Все возможные источники изображений (в порядке приоритета)
+  const imageSources = [
+    // Основное изображение из productData
+    productData?.image_url,
+    productData?.image,
+    productData?.photo,
+    productData?.picture,
+    
+    // Изображение из объекта product
+    product?.image_url,
+    product?.image,
+    product?.photo,
+    
+    // Первое изображение из массива
+    product?.images?.[0]?.url,
+    product?.images?.[0]?.image_url,
+    product?.images?.[0]?.src,
+    
+    // Изображения из product.product (если есть такая вложенность)
+    product?.product?.image_url,
+    product?.product?.image,
+  ];
+  
+  // Найти первое валидное изображение
+  for (const source of imageSources) {
+    if (source && typeof source === 'string' && source.trim() !== '') {
+      images.push({
+        src: source,
+        alt: productData?.name || product?.name || 'Product image'
+      });
+      break; // Берем только первое найденное изображение
+    }
+  }
+  
+  // Если ничего не найдено, добавляем placeholder
+  if (images.length === 0) {
+    images.push({
+      src: '/images/placeholder.png',
+      alt: 'Изображение недоступно'
+    });
+  }
+  
+  return images;
+};
   // Format price
   const formatPrice = (price) => {
     return new Intl.NumberFormat('ru-RU', {
@@ -159,11 +205,8 @@ const ProductDetail = () => {
   breadcrumbItems.push({ label: productData?.name });
 
   // Prepare images for gallery
-  const productImages = product.images && product.images.length > 0
-    ? product.images.map(img => ({ src: img.url, alt: product.name }))
-    : product.image_url
-      ? [{ src: product.image_url, alt: product.name }]
-      : [];
+  const productImages = getProductImages();
+
 
   // Prepare tabs
   const tabs = [
