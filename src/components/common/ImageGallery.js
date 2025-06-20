@@ -88,13 +88,13 @@ const ImageGallery = ({
           onClick={toggleFullscreen}
         >
           <img
-            src={displayImages[selectedIndex].src}
+            src={`http://localhost:5000${displayImages[selectedIndex].src}`}
             alt={displayImages[selectedIndex].alt || 'Image'}
             className="gallery-image"
-            onError={(e) => {
+            /*onError={(e) => {
               e.target.onerror = null;
               e.target.src = '/images/placeholder.png';
-            }}
+            }}*/
           />
 
           {/* Управление в fullscreen режиме */}

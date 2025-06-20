@@ -74,28 +74,35 @@ export const listProductDetails = (id) => async (dispatch) => {
 };
 
 // Создание нового продукта
-export const createProduct = (product) => async (dispatch, getState) => {
+export const createProduct = (productData) => async (dispatch, getState) => {
   try {
     dispatch({ type: PRODUCT_CREATE_REQUEST });
 
-    /*const { userLogin: { userInfo } } = getState();
+    // Определяем, является ли productData FormData (содержит файл)
+    const isFormData = productData instanceof FormData;
 
     const config = {
       headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${userInfo.token}`,
+        // Для FormData не устанавливаем Content-Type, браузер сам установит правильный
+        ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
+        // Если у вас есть аутентификация, раскомментируйте:
+        // Authorization: `Bearer ${userInfo.token}`,
       },
-    };*/
+    };
 
-    // Добавляем базовый URL к запросу
-    const { data } = await axios.post(`${API_BASE_URL}/api/products`, product);
+    // Отправляем данные (FormData или обычный объект)
+    const { data } = await axios.post(
+      `${API_BASE_URL}/api/products`,
+      productData,
+      config
+    );
 
     dispatch({
       type: PRODUCT_CREATE_SUCCESS,
       payload: data,
     });
   } catch (error) {
-    console.log('error', error)
+    console.log('error', error);
     dispatch({
       type: PRODUCT_CREATE_FAIL,
       payload:

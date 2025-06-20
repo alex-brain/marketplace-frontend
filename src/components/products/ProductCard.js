@@ -27,7 +27,7 @@ const ProductCard = ({ product,showAddToCart=true,variant='default' }) => {
       <Link to={`/products/${product.id}`}>
         <div className="product-image">
           {product.image_url ? (
-            <img src={`http://localhost:5000${product.image_url}`} alt={product.name} />
+            <img src={`http://localhost:5000/uploads/${product.image_url}`} alt={product.name} />
           ) : (
             <div className="no-image">Нет изображения</div>
           )}

@@ -146,10 +146,10 @@ const getProductImages = () => {
   
   // Если ничего не найдено, добавляем placeholder
   if (images.length === 0) {
-    images.push({
+    /*images.push({
       src: '/images/placeholder.png',
       alt: 'Изображение недоступно'
-    });
+    });*/
   }
   
   return images;

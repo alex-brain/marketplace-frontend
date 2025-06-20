@@ -77,14 +77,29 @@ const ProductManagement = () => {
   // Отправка формы
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    console.log('editMode, selectedProduct', editMode, selectedProduct)
+
+    console.log('editMode, selectedProduct', editMode, selectedProduct);
+
+    // Создаем FormData для отправки файлов
+    const submitData = new FormData();
+
+    // Добавляем все поля в FormData
+    submitData.append('name', formData.name);
+    submitData.append('description', formData.description);
+    submitData.append('price', formData.price);
+    submitData.append('stock', formData.stock);
+    submitData.append('category_id', formData.category_id);
+
+    // Добавляем файл, если он выбран
+    if (formData.image) {
+      submitData.append('image', formData.image);
+    }
 
     if (editMode && selectedProduct) {
-     dispatch(updateProduct(selectedProduct.id, formData));
+      dispatch(updateProduct(selectedProduct.id, submitData));
     } else {
-      console.log('createProduct')
-      dispatch(createProduct(formData));
+      console.log('createProduct');
+      dispatch(createProduct(submitData));
     }
 
     resetForm();
